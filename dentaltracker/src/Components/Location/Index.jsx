@@ -15,7 +15,7 @@ export default function Location() {
   const sessionNameRef = useRef();
   const startRef = useRef();
   const endRef = useRef();
-  const commissionRef = useRef();
+  // const commissionRef = useRef();
 
   //   const [loading, setLoading] = useState(false);
   //   const [error, setError] = useState("");
@@ -23,7 +23,7 @@ export default function Location() {
   const [sessionName, setSessionName] = useState("");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
-  const [commission, setCommission] = useState("");
+  // const [commission, setCommission] = useState("");
 
   const currentUser = useAuth();
 
@@ -38,7 +38,7 @@ export default function Location() {
         sessionName: sessionName,
         start: start,
         end: end,
-        commission: commission,
+        // commission: commission,
       },
       { merge: true }
     );
@@ -46,61 +46,61 @@ export default function Location() {
     setSessionName("");
     setStart("");
     setEnd("");
-    setCommission("");
+    // setCommission("");
 
     //! Create new procedure list
-    const proceduresRef = collection(
-      db,
-      "users",
-      currentUser?.uid,
-      "procedures"
-    );
-    await addDoc(
-      proceduresRef,
-      {
-        "Cons & Tx Planning Model": [
-          { "consultation": 0 },
-          { "review": 0 },
-          { "review - facility": 0 },
-          { "Diagnosis & Tx Planning": 0 },
-          { "Special Material Cost Fee - 1": 0 },
-          { "Special Material Cost Fee - 2": 0 },
-          { "Special Material & Consumables": 0 },
-        ],
+  //   const proceduresRef = collection(
+  //     db,
+  //     "users",
+  //     currentUser?.uid,
+  //     "procedures"
+  //   );
+  //   await addDoc(
+  //     proceduresRef,
+  //     {
+  //       "Cons & Tx Planning Model": [
+  //         { "consultation": 0 },
+  //         { "review": 0 },
+  //         { "review - facility": 0 },
+  //         { "Diagnosis & Tx Planning": 0 },
+  //         { "Special Material Cost Fee - 1": 0 },
+  //         { "Special Material Cost Fee - 2": 0 },
+  //         { "Special Material & Consumables": 0 },
+  //       ],
 
-        "Orthodontics Model": [
-          { "Ortho Retainer": 0 },
-          { "Removable Appliance Active": 0 },
-          { "Adjustment - Appliance": 0 },
-          { "Space Maintainer": 0 },
-          { "Band Placement": 0 },
-        ],
-        "Periodontal Therapy": [
-          { "Scaling/Root Planing -1": 0 },
-          { "Scaling/Root Planing -2": 0 },
-          { "Scaling/Root Planing -3": 0 },
-          { "Polishing - 1": 0 },
-          { "Polishing - 2": 0 },
-          { "Desensitisation -1": 0 },
-          { "Desensitisation -2": 0 },
-        ],
-        "O&M Surgery": [
-          { "LA Extraction - 1": 0 },
-          { "LA Extraction - 2": 0 },
-          { "LA Extraction - 3": 0 },
-          { "Minor Surgical Procedure -1": 0 },
-          { "Minor Surgical Procedure -2": 0 },
-          { "Wiring -1": 0 },
-          { "Wiring -2": 0 },
-        ],
-        "Occlusal Therapy": [
-          { "Appliance Therapy -1": 0 },
-          { "Appliance Therapy -2": 0 },
-          { "Appliance Therapy - Per Visit": 0 },
-        ],
-      },
-      { merge: true }
-    );
+  //       "Orthodontics Model": [
+  //         { "Ortho Retainer": 0 },
+  //         { "Removable Appliance Active": 0 },
+  //         { "Adjustment - Appliance": 0 },
+  //         { "Space Maintainer": 0 },
+  //         { "Band Placement": 0 },
+  //       ],
+  //       "Periodontal Therapy": [
+  //         { "Scaling/Root Planing -1": 0 },
+  //         { "Scaling/Root Planing -2": 0 },
+  //         { "Scaling/Root Planing -3": 0 },
+  //         { "Polishing - 1": 0 },
+  //         { "Polishing - 2": 0 },
+  //         { "Desensitisation -1": 0 },
+  //         { "Desensitisation -2": 0 },
+  //       ],
+  //       "O&M Surgery": [
+  //         { "LA Extraction - 1": 0 },
+  //         { "LA Extraction - 2": 0 },
+  //         { "LA Extraction - 3": 0 },
+  //         { "Minor Surgical Procedure -1": 0 },
+  //         { "Minor Surgical Procedure -2": 0 },
+  //         { "Wiring -1": 0 },
+  //         { "Wiring -2": 0 },
+  //       ],
+  //       "Occlusal Therapy": [
+  //         { "Appliance Therapy -1": 0 },
+  //         { "Appliance Therapy -2": 0 },
+  //         { "Appliance Therapy - Per Visit": 0 },
+  //       ],
+  //     },
+  //     { merge: true }
+  //   );
   }
 
   //! Shows User specific locations
@@ -166,20 +166,20 @@ export default function Location() {
                 <br />
                 <Form.Label>Start Time</Form.Label>
                 <Form.Control
-                  type="startTime"
+                  type="time"
                   ref={startRef}
                   required
                   onChange={(e) => setStart(e.target.value)}
                 />
                 <Form.Label>End Time</Form.Label>
                 <Form.Control
-                  type="endTime"
+                  type="time"
                   ref={endRef}
                   required
                   onChange={(e) => setEnd(e.target.value)}
                 />
               </Form.Group>
-              <Form.Group id="commission">
+              {/* <Form.Group id="commission">
                 <Form.Label>Commission Rate %</Form.Label>
                 <Form.Control
                   type="commission"
@@ -187,7 +187,7 @@ export default function Location() {
                   required
                   onChange={(e) => setCommission(e.target.value)}
                 />
-              </Form.Group>
+              </Form.Group> */}
               <Link to="/dashboard">
                 <Button
                   // disabled={loading || currentUser}
