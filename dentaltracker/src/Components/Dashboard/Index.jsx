@@ -3,11 +3,10 @@ import {
   collection,
   query,
   onSnapshot,
-  addDoc,
 } from "firebase/firestore";
 import { db, useAuth } from "../../firebase";
 import { Button } from "react-bootstrap";
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { TableContainer } from "@mui/material";
 
 export default function Dashboard() {
