@@ -7,11 +7,16 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import { Container } from "react-bootstrap";
+import { Container, Form } from "react-bootstrap";
+
+import { useEffect, useState } from "react";
+import { collection, getDocs } from "firebase/firestore";
+import { db } from "../../firebase";
+import { useAuth } from "../../firebase";
 
 const columns = [
   { id: "clinicSession", label: "Clinic/Session", minWidth: 200 },
-  { id: "date", label: "Date (DD/MM/YYYY)", minWidth: 180 },
+  { id: "date", label: "Date (YYYY/MM/DD)", minWidth: 180 },
   {
     id: "amount",
     label: "Amount",
@@ -22,7 +27,7 @@ const columns = [
 ];
 
 function createData(clinicSession, date, amount) {
-  return { clinicSession, date, amount};
+  return { clinicSession, date, amount };
 }
 
 const rows = [
@@ -44,6 +49,24 @@ const rows = [
 ];
 
 export default function Billing() {
+  //! Get procedure data
+  const currentUser = useAuth();
+  const [procedureData, setProcedureData] = useState([]);
+  useEffect(() => {
+    let procedureArray = [];
+    async function allProcedures() {
+      const procedureSubcollection = await getDocs(
+        collection(db, "users", `${currentUser?.uid}`, "procedures")
+      );
+      procedureSubcollection?.forEach((doc) => {
+        procedureArray?.push(doc.data());
+      });
+      setProcedureData(procedureArray);
+    }
+    allProcedures();
+  }, [currentUser?.uid]);
+  console.log("PROCEDUREDATA", procedureData)
+
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
@@ -57,12 +80,37 @@ export default function Billing() {
   };
 
   return (
-      <>
-    <Container>
-      <div style={{ display: "flex" }} className="pt-4">
-        <h4>Billing Period</h4>
+    <>
+      <Container>
+        <div style={{ display: "flex" }} className="pt-4">
+          <h4>Billing Period</h4>
 
-        <div className="dropdown">
+          <Form.Select className="w-50 mx-3" style={{ maxWidth: "100px" }}>
+            <option>Year</option>
+            <option>2021</option>
+            <option>2020</option>
+            <option>2019</option>
+            <option>2018</option>
+            <option>2017</option>
+            <option>2016</option>
+            <option>2015</option>
+          </Form.Select>
+          <Form.Select className="w-50" style={{ maxWidth: "100px" }}>
+            <option>Month</option>
+            <option>January</option>
+            <option>February</option>
+            <option>March</option>
+            <option>April</option>
+            <option>May</option>
+            <option>June</option>
+            <option>July</option>
+            <option>August</option>
+            <option>September</option>
+            <option>October</option>
+            <option>November</option>
+            <option>December</option>
+          </Form.Select>
+          {/* <div className="dropdown">
           <button
             className="btn dropdown-toggle ms-4 py-1 px-4"
             type="button"
@@ -120,87 +168,111 @@ export default function Billing() {
               </button>
             </li>
           </ul>
+        </div> */}
         </div>
-      </div>
 
-      <div>
-        <h4 className="my-5">Billing Details</h4>
-      </div>
-      
-      <Paper sx={{ width: "100%", overflow: "hidden" }} elevation={3}>
-        <TableContainer sx={{ maxHeight: 440 }}>
-          <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-              <TableRow>
-                {columns.map((column, index) => (
-                  <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                  >
-                    {column.label}
-                  </TableCell>
-                ))}
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows
-                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((row) => {
-                  return (
-                    <TableRow
-                      hover
-                      role="checkbox"
-                      tabIndex={-1}
-                      key={row.code}
+        <div>
+          <h4 className="my-5">Billing Details</h4>
+        </div>
+
+        <Paper sx={{ width: "100%", overflow: "hidden" }} elevation={3}>
+          <TableContainer sx={{ maxHeight: 440 }}>
+            <Table stickyHeader aria-label="sticky table">
+              <TableHead>
+                <TableRow>
+                  {columns.map((column, index) => (
+                    <TableCell
+                      key={column.id}
+                      align={column.align}
+                      style={{ minWidth: column.minWidth }}
                     >
-                      {columns.map((column) => {
-                        const value = row[column.id];
-                        return (
-                          <TableCell key={column.id} align={column.align}>
-                            {column.format && typeof value === "number"
-                              ? column.format(value)
-                              : value}
-                          </TableCell>
-                        );
-                      })}
-                    </TableRow>
-                  );
-                })}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={rows.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onPageChange={handleChangePage}
-          onRowsPerPageChange={handleChangeRowsPerPage}
-        />
-      </Paper>
-    </Container>
-    <TableContainer className="pt-4">
-                <Container style={{backgroundColor:"#dee2e6", borderRadius:"10px", color: "#495057", maxWidth: "300px"}} className="w-100 py-3">
-                    <h6>LOCATION</h6>
-                    <h6>Total Billed Amount: $</h6>
-                    <h6>Named Session 1: $</h6>
-                    <h6>Named Session 2: $</h6>
-                </Container>
-                <Container style={{backgroundColor:"#dee2e6", borderRadius:"10px", color: "#495057", maxWidth: "300px"}} className="w-100 mt-5 py-3">
-                    <h6>LOCATION</h6>
-                    <h6>Total Billed Amount: $</h6>
-                    <h6>Named Session 1: $</h6>
-                    <h6>Named Session 2: $</h6>
-                </Container>
-                <Container style={{backgroundColor:"#dee2e6", borderRadius:"10px", color: "#495057", maxWidth: "300px"}} className="w-100 mt-5 py-3">
-                    <h6>LOCATION</h6>
-                    <h6>Total Billed Amount: $</h6>
-                    <h6>Named Session 1: $</h6>
-                    <h6>Named Session 2: $</h6>
-                </Container>
-    </TableContainer>
+                      {column.label}
+                    </TableCell>
+                  ))}
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {rows
+                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .map((row) => {
+                    return (
+                      <TableRow
+                        hover
+                        role="checkbox"
+                        tabIndex={-1}
+                        key={row.code}
+                      >
+                        {columns.map((column) => {
+                          const value = row[column.id];
+                          return (
+                            <TableCell key={column.id} align={column.align}>
+                              {column.format && typeof value === "number"
+                                ? column.format(value)
+                                : value}
+                            </TableCell>
+                          );
+                        })}
+                      </TableRow>
+                    );
+                  })}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <TablePagination
+            rowsPerPageOptions={[10, 25, 100]}
+            component="div"
+            count={rows.length}
+            rowsPerPage={rowsPerPage}
+            page={page}
+            onPageChange={handleChangePage}
+            onRowsPerPageChange={handleChangeRowsPerPage}
+          />
+        </Paper>
+      </Container>
+      <TableContainer className="pt-4">
+        <Container
+          style={{
+            backgroundColor: "#dee2e6",
+            borderRadius: "10px",
+            color: "#495057",
+            maxWidth: "300px",
+          }}
+          className="w-100 py-3"
+        >
+          <h6>LOCATION</h6>
+          <h6>Total Billed Amount: $</h6>
+          <h6>Named Session 1: $</h6>
+          <h6>Named Session 2: $</h6>
+        </Container>
+        <Container
+          style={{
+            backgroundColor: "#dee2e6",
+            borderRadius: "10px",
+            color: "#495057",
+            maxWidth: "300px",
+          }}
+          className="w-100 mt-5 py-3"
+        >
+          <h6>LOCATION</h6>
+          <h6>Total Billed Amount: $</h6>
+          <h6>Named Session 1: $</h6>
+          <h6>Named Session 2: $</h6>
+        </Container>
+        <Container
+          style={{
+            backgroundColor: "#dee2e6",
+            borderRadius: "10px",
+            color: "#495057",
+            maxWidth: "300px",
+          }}
+          className="w-100 mt-5 py-3"
+        >
+          <h6>LOCATION</h6>
+          <h6>Total Billed Amount: $</h6>
+          <h6>Named Session 1: $</h6>
+          <h6>Named Session 2: $</h6>
+        </Container>
+      </TableContainer>
     </>
   );
 }
