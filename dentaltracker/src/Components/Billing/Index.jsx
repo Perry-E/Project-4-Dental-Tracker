@@ -13,40 +13,8 @@ import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 import { useAuth } from "../../firebase";
+import { format } from "date-fns";
 
-const columns = [
-  { id: "clinicSession", label: "Clinic/Session", minWidth: 200 },
-  { id: "date", label: "Date (YYYY/MM/DD)", minWidth: 180 },
-  {
-    id: "amount",
-    label: "Amount",
-    minWidth: 170,
-    align: "right",
-    format: (value) => value.toLocaleString("en-US"),
-  },
-];
-
-function createData(clinicSession, date, amount) {
-  return { clinicSession, date, amount };
-}
-
-const rows = [
-  createData("NUH", "11/10/2021", 1324),
-  createData("NUH", "11/10/2021", 1403),
-  createData("Q&M - Punggol", "13/10/2021", 6048),
-  createData("TTSH", "14/10/2021", 3271),
-  createData("Q&M - Punggol", "15/10/2021", 3760),
-  createData("Kovan", "17/10/2021", 2547),
-  createData("Kovan", "17/10/2021", 8301),
-  createData("NUH", "18/10/2021", 4857),
-  createData("Q&M - Punggol", "20/10/2021", 1265),
-  createData("TTSH", "21/10/2021", 1263),
-  createData("Q&M - Punggol", "22/10/2021", 6702),
-  createData("NUH", "1/11/2021", 6754),
-  createData("TTSH", "3/11/2021", 1467),
-  createData("Q&M - Punggol", "5/11/2021", 2009),
-  createData("Q&M - Punggol", "5/11/2021", 2101),
-];
 
 export default function Billing() {
   //! Get procedure data
@@ -67,8 +35,51 @@ export default function Billing() {
   }, [currentUser?.uid]);
   console.log("PROCEDUREDATA", procedureData)
 
-  const [page, setPage] = React.useState(0);
-  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
+  const columns = [
+    { id: "clinicSession", label: "Clinic/Session", minWidth: 200 },
+    { id: "date", label: "Date (DD/MM/YYYY)", minWidth: 180 },
+    {
+      id: "amount",
+      label: "Amount",
+      minWidth: 170,
+      align: "right",
+      format: (value) => value.toLocaleString("en-US"),
+    },
+  ];
+  
+  function createData(clinicSession, date, amount) {
+    return { clinicSession, date, amount };
+  }
+  
+  const rows = procedureData.map((item)=>{
+    return createData(
+      item.Location+" / "+item.Session,
+      format(new Date(item.Date), "dd/MM/yyyy"),
+      item.Charged * (item.Commission / 100)
+    )
+      // const charged = item.Charged
+      // console.log("charged", charged);
+
+      // const commission = item.Commission
+      // console.log("commission", commission);
+
+      // const takeBack = item.Charged * (item.Commission / 100);
+      // console.log("TAKEBACK", takeBack)
+
+      // const date = item.Date
+      // console.log("Date", date)
+
+      // const location = item.Location
+      // console.log("Location", location)
+
+      // const session = item.Session
+      // console.log("Session", session)
+  })
+
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(10);
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -79,36 +90,45 @@ export default function Billing() {
     setPage(0);
   };
 
+const [month, setMonth] = useState()
+const [year, setYear] = useState()
+
+console.log("YEAR", year)
+console.log("MONTH", month)
+
+
+
+
   return (
     <>
       <Container>
         <div style={{ display: "flex" }} className="pt-4">
           <h4>Billing Period</h4>
 
-          <Form.Select className="w-50 mx-3" style={{ maxWidth: "100px" }}>
-            <option>Year</option>
-            <option>2021</option>
-            <option>2020</option>
-            <option>2019</option>
-            <option>2018</option>
-            <option>2017</option>
-            <option>2016</option>
-            <option>2015</option>
+          <Form.Select className="w-50 mx-3" style={{ maxWidth: "100px" }} onChange={(e)=>setYear(e?.target?.value)}>
+            <option >Year</option>
+            <option >2021</option>
+            <option >2020</option>
+            {/* <option >2019</option>
+            <option >2018</option>
+            <option >2017</option>
+            <option >2016</option>
+            <option >2015</option> */}
           </Form.Select>
-          <Form.Select className="w-50" style={{ maxWidth: "100px" }}>
+          <Form.Select className="w-50" style={{ maxWidth: "100px" }} onChange={(e)=>setMonth(e?.target?.value)}>
             <option>Month</option>
-            <option>January</option>
-            <option>February</option>
-            <option>March</option>
-            <option>April</option>
+            <option>Jan</option>
+            <option>Feb</option>
+            <option>Mar</option>
+            <option>Apr</option>
             <option>May</option>
-            <option>June</option>
-            <option>July</option>
-            <option>August</option>
-            <option>September</option>
-            <option>October</option>
-            <option>November</option>
-            <option>December</option>
+            <option>Jun</option>
+            <option>Jul</option>
+            <option>Aug</option>
+            <option>Sep</option>
+            <option>Oct</option>
+            <option>Nov</option>
+            <option>Dec</option>
           </Form.Select>
           {/* <div className="dropdown">
           <button
