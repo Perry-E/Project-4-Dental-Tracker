@@ -96,7 +96,21 @@ const [year, setYear] = useState()
 console.log("YEAR", year)
 console.log("MONTH", month)
 
+const filterByYear = procedureData.filter((item)=>{
+  console.log("YEAR FILTER", format(new Date(item.Date), "yyyy"))
+  return(
+    format(new Date(item.Date), "yyyy") === year
+  )
+})
+console.log(filterByYear)
 
+const filterByMonth = procedureData.filter((item)=>{
+  console.log("MONTH FILTER", format(new Date(item.Date), "MMM"))
+  return(
+    format(new Date(item.Date), "MMM") === month
+  )
+})
+console.log(filterByMonth)
 
 
   return (
