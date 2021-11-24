@@ -1,13 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {
-  collection,
-  query,
-  onSnapshot,
-} from "firebase/firestore";
+import { collection, query, onSnapshot } from "firebase/firestore";
 import { db, useAuth } from "../../firebase";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { TableContainer } from "@mui/material";
+import DashboardTab from "./DashboardTab";
 
 export default function Dashboard() {
   const [users, setUsers] = useState([]);
@@ -83,7 +80,7 @@ export default function Dashboard() {
       { id: 2, name: "Review", checked: false },
       { id: 3, name: "Review - facility", checked: false },
       { id: 4, name: "Diagnosis & Tx Planning", checked: false },
-      { id: 5, name: "Special Material Cost Fee - ", checked: false },
+      { id: 5, name: "Special Material Cost Fee - 1", checked: false },
       { id: 6, name: "Special Material Cost Fee - 2", checked: false },
       { id: 7, name: "Special Material & Consumables", checked: false },
     ],
@@ -200,22 +197,16 @@ export default function Dashboard() {
     setOcclusal({ "Occlusal Therapy": updatedList }); // set state to new object with updated list
   };
 
-  const [totalProcedures, setTotalProcedures] = useState()
-  useEffect(()=>{
-    setTotalProcedures([
-      consTx,
-      orthodontics,
-      periodontal,
-      oAndM,
-      occlusal,
-    ])
-  },[consTx, orthodontics, periodontal, oAndM, occlusal])
-  console.log("TOTAL PROCEDURES", totalProcedures)
+  const [totalProcedures, setTotalProcedures] = useState();
+  useEffect(() => {
+    setTotalProcedures([consTx, orthodontics, periodontal, oAndM, occlusal]);
+  }, [consTx, orthodontics, periodontal, oAndM, occlusal]);
+  console.log("TOTAL PROCEDURES", totalProcedures);
 
   return (
-    <div>
+    <div style={{marginTop:"-300px"}}>
       <h4 className="text-center mb-4">Treatment/Procedure</h4>
-      <TableContainer>
+      {/* <TableContainer>
         <Button
           style={{
             backgroundColor: "#dee2e6",
@@ -348,17 +339,30 @@ export default function Dashboard() {
         style={{ position: "relative", right: "-300px", top: "-250px" }}
       >
         {show && <div>{filteredValues}</div>}
-      </TableContainer>
-      <div>
-        <Link to="summary"
-            state= {{data: totalProcedures}}
-          >
-            {/* <Navigate to */}
+      </TableContainer> */}
+      <DashboardTab
+        consTx={consTx}
+        orthodontics={orthodontics}
+        periodontal={periodontal}
+        oAndM={oAndM}
+        occlusal={occlusal}
+        toggleConsTx={toggleConsTx}
+        toggleOrtho={toggleOrtho}
+        togglePeriod={togglePeriod}
+        toggleOAndM={toggleOAndM}
+        toggleOcclusal={toggleOcclusal}
+      />
+      <div style={{
+              textAlign: "center"
+            }}>
+        <Link to="summary" state={{ data: totalProcedures }}>
+          {/* <Navigate to */}
           <Button
             style={{
               backgroundColor: "#06d6a0",
               color: "#495057",
               border: "none",
+              maxWidth: "200px",
             }}
             className="w-100 mt-5 py-3"
             // onClick={()=>handleNew()}
