@@ -9,7 +9,7 @@ import { useAuth } from "../../firebase";
 // import { LineChart } from "./LineChart";
 // import PieChart from "./PieChart";
 // import FullWidthTabs from "./Tab";
-import BasicTabs from "./Tab";
+import BasicTabs from "./AnalyticsTab";
 
 export default function Analytics() {
   const currentUser = useAuth();
