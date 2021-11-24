@@ -145,7 +145,7 @@ export default function Billing() {
 
   return (
     <>
-      <Container>
+      <Container style={{marginTop:"-300px"}}>
         <div style={{ display: "flex" }} className="pt-4">
           <h4>Billing Period</h4>
 
@@ -242,7 +242,7 @@ export default function Billing() {
           />
         </Paper>
       </Container>
-      <TableContainer className="pt-4">
+      <TableContainer className="pt-4" style={{marginTop:"-300px"}}>
         <Container
           style={{
             backgroundColor: "#dee2e6",
