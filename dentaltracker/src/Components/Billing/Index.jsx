@@ -15,11 +15,16 @@ import { db } from "../../firebase";
 import { useAuth } from "../../firebase";
 import { format } from "date-fns";
 
-
 export default function Billing() {
   //! Get procedure data
   const currentUser = useAuth();
   const [procedureData, setProcedureData] = useState([]);
+  const [month, setMonth] = useState("");
+  const [year, setYear] = useState("");
+
+  console.log("YEAR", year);
+  console.log("MONTH", month);
+
   useEffect(() => {
     let procedureArray = [];
     async function allProcedures() {
@@ -33,8 +38,7 @@ export default function Billing() {
     }
     allProcedures();
   }, [currentUser?.uid]);
-  console.log("PROCEDUREDATA", procedureData)
-
+  console.log("PROCEDUREDATA", procedureData);
 
   const columns = [
     { id: "clinicSession", label: "Clinic/Session", minWidth: 200 },
@@ -47,36 +51,85 @@ export default function Billing() {
       format: (value) => value.toLocaleString("en-US"),
     },
   ];
-  
+
   function createData(clinicSession, date, amount) {
     return { clinicSession, date, amount };
   }
-  
-  const rows = procedureData.map((item)=>{
+
+  const filteredData = procedureData.filter((data) => {
+    if (
+      (month === "Month" || month === "") &&
+      (year === "Year" || year === "")
+    ) {
+      console.log("ALL PROCEDURES", data);
+      return [data];
+    } else if (
+      format(new Date(data.Date), "yyyy") === year &&
+      (month === "Month" || month === "")
+    ) {
+      console.log("FILTERED BY YEAR", data);
+      return [data];
+    } else if (
+      format(new Date(data.Date), "MMM") === month &&
+      (year === "Year" || year === "")
+    ) {
+      console.log("FILTERED BY MONTH", data);
+      return [data];
+    } else if (
+      format(new Date(data.Date), "MMM") === month &&
+      format(new Date(data.Date), "yyyy") === year
+    ) {
+      console.log("FILTERED BY BOTH", data);
+      return [data];
+    }
+    return null;
+  });
+
+  console.log("FILTERED DATA", filteredData);
+
+  // useEffect(() => {
+  //   setProcedureData(filteredData);
+  // const filterByYear = procedureData.filter((item) => {
+  //   // console.log("YEAR FILTER", format(new Date(item.Date), "yyyy"))
+  //   return format(new Date(item.Date), "yyyy") === year;
+  // });
+  // setProcedureData(filterByYear);
+
+  // const filterByMonth = procedureData.filter((item) => {
+  //   // console.log("MONTH FILTER", format(new Date(item.Date), "MMM"))
+  //   return format(new Date(item.Date), "MMM") === month;
+  // });
+  // setProcedureData(filterByMonth);
+  // }, []);
+  // console.log("NEW PEOCEDURE DATA", procedureData);
+
+  let rows = filteredData.map((item) => {
     return createData(
-      item.Location+" / "+item.Session,
-      format(new Date(item.Date), "dd/MM/yyyy"),
-      item.Charged * (item.Commission / 100)
-    )
-      // const charged = item.Charged
-      // console.log("charged", charged);
+      item?.Location + " / " + item?.Session,
+      format(new Date(item?.Date), "dd/MM/yyyy"),
+      item?.Charged * (item?.Commission / 100)
+    );
 
-      // const commission = item.Commission
-      // console.log("commission", commission);
+    // const charged = item.Charged
+    // console.log("charged", charged);
 
-      // const takeBack = item.Charged * (item.Commission / 100);
-      // console.log("TAKEBACK", takeBack)
+    // const commission = item.Commission
+    // console.log("commission", commission);
 
-      // const date = item.Date
-      // console.log("Date", date)
+    // const takeBack = item.Charged * (item.Commission / 100);
+    // console.log("TAKEBACK", takeBack)
 
-      // const location = item.Location
-      // console.log("Location", location)
+    // const date = item.Date
+    // console.log("Date", date)
 
-      // const session = item.Session
-      // console.log("Session", session)
-  })
+    // const location = item.Location
+    // console.log("Location", location)
 
+    // const session = item.Session
+    // console.log("Session", session)
+  });
+
+  console.log("ROWS", rows);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -90,46 +143,31 @@ export default function Billing() {
     setPage(0);
   };
 
-const [month, setMonth] = useState()
-const [year, setYear] = useState()
-
-console.log("YEAR", year)
-console.log("MONTH", month)
-
-const filterByYear = procedureData.filter((item)=>{
-  console.log("YEAR FILTER", format(new Date(item.Date), "yyyy"))
-  return(
-    format(new Date(item.Date), "yyyy") === year
-  )
-})
-console.log(filterByYear)
-
-const filterByMonth = procedureData.filter((item)=>{
-  console.log("MONTH FILTER", format(new Date(item.Date), "MMM"))
-  return(
-    format(new Date(item.Date), "MMM") === month
-  )
-})
-console.log(filterByMonth)
-
-
   return (
     <>
       <Container>
         <div style={{ display: "flex" }} className="pt-4">
           <h4>Billing Period</h4>
 
-          <Form.Select className="w-50 mx-3" style={{ maxWidth: "100px" }} onChange={(e)=>setYear(e?.target?.value)}>
-            <option >Year</option>
-            <option >2021</option>
-            <option >2020</option>
+          <Form.Select
+            className="w-50 mx-3"
+            style={{ maxWidth: "100px" }}
+            onChange={(e) => setYear(e?.target?.value)}
+          >
+            <option>Year</option>
+            <option>2021</option>
+            <option>2020</option>
             {/* <option >2019</option>
             <option >2018</option>
             <option >2017</option>
             <option >2016</option>
             <option >2015</option> */}
           </Form.Select>
-          <Form.Select className="w-50" style={{ maxWidth: "100px" }} onChange={(e)=>setMonth(e?.target?.value)}>
+          <Form.Select
+            className="w-50"
+            style={{ maxWidth: "100px" }}
+            onChange={(e) => setMonth(e?.target?.value)}
+          >
             <option>Month</option>
             <option>Jan</option>
             <option>Feb</option>
@@ -144,65 +182,6 @@ console.log(filterByMonth)
             <option>Nov</option>
             <option>Dec</option>
           </Form.Select>
-          {/* <div className="dropdown">
-          <button
-            className="btn dropdown-toggle ms-4 py-1 px-4"
-            type="button"
-            id="dropdownMenu2"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            style={{ border: "1px solid black" }}
-          >
-            Month
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li>
-              <button className="dropdown-item" type="button">
-                Action
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" type="button">
-                Another action
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" type="button">
-                Something else here
-              </button>
-            </li>
-          </ul>
-        </div>
-
-        <div className="dropdown">
-          <button
-            className="btn dropdown-toggle ms-4 py-1 px-4"
-            type="button"
-            id="dropdownMenu2"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-            style={{ border: "1px solid black" }}
-          >
-            Year
-          </button>
-          <ul className="dropdown-menu" aria-labelledby="dropdownMenu2">
-            <li>
-              <button className="dropdown-item" type="button">
-                Action
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" type="button">
-                Another action
-              </button>
-            </li>
-            <li>
-              <button className="dropdown-item" type="button">
-                Something else here
-              </button>
-            </li>
-          </ul>
-        </div> */}
         </div>
 
         <div>
