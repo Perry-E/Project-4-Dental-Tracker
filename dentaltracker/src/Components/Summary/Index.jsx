@@ -4,6 +4,7 @@ import { useLocation } from "react-router";
 import { collection, addDoc, getDocs } from "firebase/firestore";
 import { db, useAuth } from "../../firebase";
 import { Link } from "react-router-dom";
+import SummaryTab from "./SummaryTab";
 
 export default function Summary() {
   const location = useLocation();
@@ -70,7 +71,7 @@ export default function Summary() {
   console.log("periodFiltered", periodFiltered);
   const periodData = { "Periodontal Therapy": periodFiltered };
   console.log("periodData", periodData);
-  
+
   //! filtered O&M Surgery
   const oAndMFiltered = oAndM?.filter((item) => {
     return item.checked === true;
@@ -136,8 +137,8 @@ export default function Summary() {
 
   return (
     <div>
-      <h1>SUMMARY</h1>
-      <h4>Cons & Tx Planning Model</h4>
+      <h5 style={{ textAlign: "center", marginTop: "-30px" }}>SUMMARY</h5>
+      {/* <h4>Cons & Tx Planning Model</h4>
       {consTxFiltered?.map((item) => {
         return <div>{item.name}</div>;
       })}
@@ -160,85 +161,102 @@ export default function Summary() {
       <h4>Occlusal Therapy</h4>
       {occlusalFiltered?.map((item) => {
         return <div>{item.name}</div>;
-      })}
+      })} */}
 
-      <h5>Charged Fee</h5>
-      <div>
-        $SGD{" "}
-        <Form.Group id="fee">
-          <Form.Control
-            type="number"
-            required
-            onChange={(e) => setCharged(e.target.value)}
-          />
-        </Form.Group>
-      </div>
-      <div>
-        Commission Rate:
-        <Form.Group id="rate">
-          <Form.Control
-            type="number"
-            required
-            onChange={(e) => setCommission(e.target.value)}
-          />
-        </Form.Group>
-        %
-      </div>
-      <div>
-        Date & Day{" "}
-        <Form.Group id="date">
-          <Form.Control
-            type="date"
-            required
-            onChange={(e) => setDate(e.target.value)}
-          />
-        </Form.Group>
-      </div>
-      <div>
-        Time{" "}
-        <Form.Group id="time">
-          <Form.Control
-            type="time"
-            required
-            onChange={(e) => setTime(e.target.value)}
-          />
-        </Form.Group>
-      </div>
-      <div>
-        Location{" "}
-        <Form.Select
-          id="location"
-          onChange={(e) => setLocationName(e.target.value)}
-        >
-            {userLocations.map((item)=>{
-                return(
-                    <option>{item.locationName}</option>
-                )
+      <SummaryTab
+        consTxFiltered={consTxFiltered}
+        orthoFiltered={orthoFiltered}
+        periodFiltered={periodFiltered}
+        oAndMFiltered={oAndMFiltered}
+        occlusalFiltered={occlusalFiltered}
+      />
+
+      <div style={{ maxWidth: "500px", margin: "0 auto" }}>
+        <div>
+          Charged Fee ($SGD):{" "}
+          <Form.Group id="fee">
+            <Form.Control
+              type="number"
+              required
+              onChange={(e) => setCharged(e.target.value)}
+            />
+          </Form.Group>
+        </div>
+        <div>
+          Commission Rate (%):
+          <Form.Group id="rate">
+            <Form.Control
+              type="number"
+              required
+              onChange={(e) => setCommission(e.target.value)}
+            />
+          </Form.Group>
+        </div>
+        <div>
+          Date:{" "}
+          <Form.Group id="date">
+            <Form.Control
+              type="date"
+              required
+              onChange={(e) => setDate(e.target.value)}
+            />
+          </Form.Group>
+        </div>
+        <div>
+          Time:{" "}
+          <Form.Group id="time">
+            <Form.Control
+              type="time"
+              required
+              onChange={(e) => setTime(e.target.value)}
+            />
+          </Form.Group>
+        </div>
+        <div>
+          Location:{" "}
+          <Form.Select
+            id="location"
+            onChange={(e) => setLocationName(e.target.value)}
+          >
+            {userLocations.map((item) => {
+              return <option>{item.locationName}</option>;
             })}
-        </Form.Select>
-      </div>
-      <div>
-        Session{" "}
-        <Form.Select
-          id="session"
-          onChange={(e) => setSessionName(e.target.value)}
-        >
-            {userLocations.map((item)=>{
-                return(
-                    <option>{item.sessionName}</option>
-                )
+          </Form.Select>
+        </div>
+        <div>
+          Session:{" "}
+          <Form.Select
+            id="session"
+            onChange={(e) => setSessionName(e.target.value)}
+          >
+            {userLocations.map((item) => {
+              return <option>{item.sessionName}</option>;
             })}
-        </Form.Select>
+          </Form.Select>
+        </div>
+        <div
+          style={{
+            textAlign: "center",
+            margin: "25px",
+          }}
+        >
+          <Link to="/billing">
+            <Button
+              type="submit"
+              style={{
+                backgroundColor: "#06d6a0",
+                color: "#495057",
+                border: "none",
+                paddingLeft: "50px",
+                paddingRight: "50px",
+              }}
+              onClick={() => handleNew()}
+            >
+              Submit
+            </Button>
+          </Link>
+        </div>
       </div>
-      <Link to="/billing">
-      <Button
-        type="submit"
-        style={{ backgroundColor: "#06d6a0", color: "#495057", border: "none" }}
-        onClick={()=>handleNew()}
-      >
-        Submit
-      </Button>
-      </Link>
     </div>
   );
 }
