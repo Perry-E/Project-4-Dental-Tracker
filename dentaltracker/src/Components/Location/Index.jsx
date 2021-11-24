@@ -3,11 +3,7 @@ import { Card, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../firebase";
 
-import {
-  addDoc,
-  collection,
-  getDocs,
-} from "firebase/firestore";
+import { addDoc, collection, getDocs } from "firebase/firestore";
 import { db } from "../../firebase";
 
 export default function Location() {
@@ -49,58 +45,58 @@ export default function Location() {
     // setCommission("");
 
     //! Create new procedure list
-  //   const proceduresRef = collection(
-  //     db,
-  //     "users",
-  //     currentUser?.uid,
-  //     "procedures"
-  //   );
-  //   await addDoc(
-  //     proceduresRef,
-  //     {
-  //       "Cons & Tx Planning Model": [
-  //         { "consultation": 0 },
-  //         { "review": 0 },
-  //         { "review - facility": 0 },
-  //         { "Diagnosis & Tx Planning": 0 },
-  //         { "Special Material Cost Fee - 1": 0 },
-  //         { "Special Material Cost Fee - 2": 0 },
-  //         { "Special Material & Consumables": 0 },
-  //       ],
+    //   const proceduresRef = collection(
+    //     db,
+    //     "users",
+    //     currentUser?.uid,
+    //     "procedures"
+    //   );
+    //   await addDoc(
+    //     proceduresRef,
+    //     {
+    //       "Cons & Tx Planning Model": [
+    //         { "consultation": 0 },
+    //         { "review": 0 },
+    //         { "review - facility": 0 },
+    //         { "Diagnosis & Tx Planning": 0 },
+    //         { "Special Material Cost Fee - 1": 0 },
+    //         { "Special Material Cost Fee - 2": 0 },
+    //         { "Special Material & Consumables": 0 },
+    //       ],
 
-  //       "Orthodontics Model": [
-  //         { "Ortho Retainer": 0 },
-  //         { "Removable Appliance Active": 0 },
-  //         { "Adjustment - Appliance": 0 },
-  //         { "Space Maintainer": 0 },
-  //         { "Band Placement": 0 },
-  //       ],
-  //       "Periodontal Therapy": [
-  //         { "Scaling/Root Planing -1": 0 },
-  //         { "Scaling/Root Planing -2": 0 },
-  //         { "Scaling/Root Planing -3": 0 },
-  //         { "Polishing - 1": 0 },
-  //         { "Polishing - 2": 0 },
-  //         { "Desensitisation -1": 0 },
-  //         { "Desensitisation -2": 0 },
-  //       ],
-  //       "O&M Surgery": [
-  //         { "LA Extraction - 1": 0 },
-  //         { "LA Extraction - 2": 0 },
-  //         { "LA Extraction - 3": 0 },
-  //         { "Minor Surgical Procedure -1": 0 },
-  //         { "Minor Surgical Procedure -2": 0 },
-  //         { "Wiring -1": 0 },
-  //         { "Wiring -2": 0 },
-  //       ],
-  //       "Occlusal Therapy": [
-  //         { "Appliance Therapy -1": 0 },
-  //         { "Appliance Therapy -2": 0 },
-  //         { "Appliance Therapy - Per Visit": 0 },
-  //       ],
-  //     },
-  //     { merge: true }
-  //   );
+    //       "Orthodontics Model": [
+    //         { "Ortho Retainer": 0 },
+    //         { "Removable Appliance Active": 0 },
+    //         { "Adjustment - Appliance": 0 },
+    //         { "Space Maintainer": 0 },
+    //         { "Band Placement": 0 },
+    //       ],
+    //       "Periodontal Therapy": [
+    //         { "Scaling/Root Planing -1": 0 },
+    //         { "Scaling/Root Planing -2": 0 },
+    //         { "Scaling/Root Planing -3": 0 },
+    //         { "Polishing - 1": 0 },
+    //         { "Polishing - 2": 0 },
+    //         { "Desensitisation -1": 0 },
+    //         { "Desensitisation -2": 0 },
+    //       ],
+    //       "O&M Surgery": [
+    //         { "LA Extraction - 1": 0 },
+    //         { "LA Extraction - 2": 0 },
+    //         { "LA Extraction - 3": 0 },
+    //         { "Minor Surgical Procedure -1": 0 },
+    //         { "Minor Surgical Procedure -2": 0 },
+    //         { "Wiring -1": 0 },
+    //         { "Wiring -2": 0 },
+    //       ],
+    //       "Occlusal Therapy": [
+    //         { "Appliance Therapy -1": 0 },
+    //         { "Appliance Therapy -2": 0 },
+    //         { "Appliance Therapy - Per Visit": 0 },
+    //       ],
+    //     },
+    //     { merge: true }
+    //   );
   }
 
   //! Shows User specific locations
@@ -124,27 +120,26 @@ export default function Location() {
   console.log("USER LOCATIONS", userLocations);
   //! Shows all locations
   // async function allLocations() {
-    //   const locations = query(
-      //     collectionGroup(db, "location"),
-      //   // where("id", "==", "Hc9a4qbzHZCsLrenVvcm")
-      //   );
-      //   const querySnapshot = await getDocs(locations);
-      //   querySnapshot.forEach((doc) => {
-        //     console.log(doc.id, " => ", doc.data());
-        //   });
-        // }
-        // allLocations();
-        
-        
+  //   const locations = query(
+  //     collectionGroup(db, "location"),
+  //   // where("id", "==", "Hc9a4qbzHZCsLrenVvcm")
+  //   );
+  //   const querySnapshot = await getDocs(locations);
+  //   querySnapshot.forEach((doc) => {
+  //     console.log(doc.id, " => ", doc.data());
+  //   });
+  // }
+  // allLocations();
+
   return (
     <>
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+      <div className="w-100" style={{ maxWidth: "400px", marginTop: "-300px" }}>
         <h2 className="text-center mb-4">Add New Location & Session</h2>
         <Card>
           <Card.Body>
             <Form>
               <Form.Group id="location">
-                <Form.Label>Name of Location</Form.Label>
+                <Form.Label>Name of Location:</Form.Label>
                 <Form.Control
                   type="location"
                   ref={locationRef}
@@ -153,7 +148,7 @@ export default function Location() {
                 />
               </Form.Group>
               <Form.Group id="sessionName">
-                <Form.Label>Session Name</Form.Label>
+                <Form.Label>Session Name:</Form.Label>
                 <Form.Control
                   type="sessionName"
                   ref={sessionNameRef}
@@ -162,16 +157,14 @@ export default function Location() {
                 />
               </Form.Group>
               <Form.Group id="sessionTime">
-                <Form.Label>Session Timing</Form.Label>
-                <br />
-                <Form.Label>Start Time</Form.Label>
+                <Form.Label>Start Time:</Form.Label>
                 <Form.Control
                   type="time"
                   ref={startRef}
                   required
                   onChange={(e) => setStart(e.target.value)}
                 />
-                <Form.Label>End Time</Form.Label>
+                <Form.Label>End Time:</Form.Label>
                 <Form.Control
                   type="time"
                   ref={endRef}
@@ -212,7 +205,7 @@ export default function Location() {
       </div>
       <div
         className="w-50 mx-3"
-        style={{ maxWidth: "400px", textAlign: "center" }}
+        style={{ maxWidth: "200px", textAlign: "center", marginTop: "-300px" }}
       >
         <h5>Saved Locations</h5>
         {userLocations?.map((item, index) => {
@@ -226,7 +219,6 @@ export default function Location() {
                   border: "none",
                 }}
                 className="py-3 px-5 shadow-none"
-                
               >
                 {item.locationName}
               </Card>
