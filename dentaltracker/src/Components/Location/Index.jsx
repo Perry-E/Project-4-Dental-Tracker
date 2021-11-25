@@ -1,16 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import { Card, Form, Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../firebase";
+import DeleteIcon from "@mui/icons-material/Delete";
 
-import { addDoc, collection, getDocs } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  getDocs,
+  doc,
+  deleteDoc,
+} from "firebase/firestore";
 import { db } from "../../firebase";
+import UpdateModal from "./UpdateModal";
 
 export default function Location() {
-  const locationRef = useRef();
-  const sessionNameRef = useRef();
-  const startRef = useRef();
-  const endRef = useRef();
+  // const locationRef = useRef();
+  // const sessionNameRef = useRef();
+  // const startRef = useRef();
+  // const endRef = useRef();
   // const commissionRef = useRef();
 
   //   const [loading, setLoading] = useState(false);
@@ -42,6 +50,7 @@ export default function Location() {
     setSessionName("");
     setStart("");
     setEnd("");
+    window.location.reload(false);
     // setCommission("");
 
     //! Create new procedure list
@@ -108,7 +117,7 @@ export default function Location() {
         collection(db, "users", `${currentUser?.uid}`, "location")
       );
       locationSubcollection?.forEach((doc) => {
-        locationArray?.push(doc.data());
+        locationArray?.push({ ...doc.data(), id: doc.id });
         // console.log("DOC DATA", doc.data())
         // setUserLocations(doc.data())
         // console.log("LOCATION ARRAY", locationArray)
@@ -117,7 +126,7 @@ export default function Location() {
     }
     allLocations();
   }, [currentUser?.uid]);
-  console.log("USER LOCATIONS", userLocations);
+  // console.log("USER LOCATIONS", userLocations);
   //! Shows all locations
   // async function allLocations() {
   //   const locations = query(
@@ -131,10 +140,29 @@ export default function Location() {
   // }
   // allLocations();
 
+  const [modalShow, setModalShow] = useState(false);
+  // const navigate = useNavigate();
+
+  const handleDelete = async (id) => {
+    const docRef = doc(db, "users", `${currentUser?.uid}`, "location", id);
+    await deleteDoc(docRef);
+    // navigate("/location")
+    window.location.reload(false);
+    // await deleteDoc(doc(db, "location", `${id}`))
+  };
+
+  const [selected, setSelected] = useState();
+
+  const handleClick = (item) => {
+    setModalShow(true);
+    console.log("TARGET", item);
+    setSelected(item);
+  };
+  console.log("SELECTED", selected);
   return (
     <>
-      <div className="w-100" style={{ maxWidth: "400px", marginTop: "-300px" }}>
-        <h2 className="text-center mb-4">Add New Location & Session</h2>
+      <div className="w-100" style={{ maxWidth: "400px", marginTop: "-250px" }}>
+        <h3 className="text-center mb-4">Add New Location & Session</h3>
         <Card>
           <Card.Body>
             <Form>
@@ -142,7 +170,7 @@ export default function Location() {
                 <Form.Label>Name of Location:</Form.Label>
                 <Form.Control
                   type="location"
-                  ref={locationRef}
+                  // ref={locationRef}
                   required
                   onChange={(e) => setLocation(e.target.value)}
                 />
@@ -151,7 +179,7 @@ export default function Location() {
                 <Form.Label>Session Name:</Form.Label>
                 <Form.Control
                   type="sessionName"
-                  ref={sessionNameRef}
+                  // ref={sessionNameRef}
                   required
                   onChange={(e) => setSessionName(e.target.value)}
                 />
@@ -160,14 +188,14 @@ export default function Location() {
                 <Form.Label>Start Time:</Form.Label>
                 <Form.Control
                   type="time"
-                  ref={startRef}
+                  // ref={startRef}
                   required
                   onChange={(e) => setStart(e.target.value)}
                 />
                 <Form.Label>End Time:</Form.Label>
                 <Form.Control
                   type="time"
-                  ref={endRef}
+                  // ref={endRef}
                   required
                   onChange={(e) => setEnd(e.target.value)}
                 />
@@ -181,7 +209,7 @@ export default function Location() {
                   onChange={(e) => setCommission(e.target.value)}
                 />
               </Form.Group> */}
-              <Link to="/dashboard">
+              <Link to="/location">
                 <Button
                   // disabled={loading || currentUser}
                   onClick={() => {
@@ -207,27 +235,75 @@ export default function Location() {
         className="w-50 mx-3"
         style={{ maxWidth: "200px", textAlign: "center", marginTop: "-300px" }}
       >
-        <h5>Saved Locations</h5>
+        <h5 style={{ textDecoration: "underline" }}>Saved Locations</h5>
         {userLocations?.map((item, index) => {
-          console.log("ITEM", item);
+          // console.log("ITEM", item);
           return (
             <div key={index}>
-              <Card
+              {/* <Card
                 style={{
                   backgroundColor: "#dee2e6",
                   color: "#495057",
                   border: "none",
                 }}
                 className="py-3 px-5 shadow-none"
-              >
-                {item.locationName}
-              </Card>
-              <a href="#" className="mx-2">
-                Edit
-              </a>
+              > */}
+              <div style={{ display: "flex", flexDirection: "row" }}>
+                <div>
+                  <Button
+                    variant="primary"
+                    onClick={() => {
+                      handleClick(item);
+                    }}
+                    // onClick={() => setModalShow(true)}
+                    // onClick={(console.log("ITEM ID", `${Object.values(item)}`))}
+                    style={{
+                      backgroundColor: "#dee2e6",
+                      color: "#495057",
+                      border: "none",
+                      margin: "5px",
+                      width: "200px",
+                    }}
+                    className="py-3 px-5 shadow-none"
+                    item={item}
+                  >
+                    {item.locationName}
+                  </Button>
+                  <UpdateModal
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    item={item}
+                    selected={selected}
+                    // onClick={()=>{handleClick(item)}}
+                    // ref={[locationRef, sessionNameRef, startRef, endRef]}
+                    // currentUser={currentUser}
+                  />
+                </div>
+                {/* </Card> */}
+                <Button
+                  href="#"
+                  className="py-3 px-3 shadow-none"
+                  onClick={() => {
+                    handleDelete(`${item.id}`);
+                  }}
+                  style={{
+                    margin: "5px 5px 5px 0px",
+                    width: "40px",
+                    backgroundColor: "rgba(255, 0, 0, 0)",
+                    border: "none",
+                  }}
+                >
+                  <DeleteIcon style={{ color: "black" }} />
+                </Button>
+              </div>
             </div>
           );
         })}
+      </div>
+      <div style={{ position: "absolute", bottom: "150px", left: "auto" }}>
+        After saving your locations, head over to the{" "}
+        <Link to="/dashboard">home page</Link> to input your completed
+        procedures
       </div>
     </>
   );
