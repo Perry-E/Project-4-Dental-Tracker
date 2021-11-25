@@ -45,7 +45,7 @@ export default function Billing() {
     { id: "date", label: "Date (DD/MM/YYYY)", minWidth: 180 },
     {
       id: "amount",
-      label: "Amount",
+      label: "Amount ($SGD)",
       minWidth: 170,
       align: "right",
       format: (value) => value.toLocaleString("en-US"),
@@ -145,7 +145,15 @@ export default function Billing() {
 
   return (
     <>
-      <Container style={{marginTop:"-300px"}}>
+      <Container
+        style={{
+          marginTop: "-100px",
+          // height: "10em",
+          // display: "flex",
+          // alignItems: "center",
+          // justifyContent: "center",
+        }}
+      >
         <div style={{ display: "flex" }} className="pt-4">
           <h4>Billing Period</h4>
 
@@ -188,7 +196,7 @@ export default function Billing() {
           <h4 className="my-5">Billing Details</h4>
         </div>
 
-        <Paper sx={{ width: "100%", overflow: "hidden" }} elevation={3}>
+        <Paper sx={{ width: "80%", overflow: "hidden" }} elevation={3}>
           <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
               <TableHead>
@@ -242,7 +250,7 @@ export default function Billing() {
           />
         </Paper>
       </Container>
-      <TableContainer className="pt-4" style={{marginTop:"-300px"}}>
+      {/* <TableContainer className="pt-4" style={{marginTop:"-300px"}}>
         <Container
           style={{
             backgroundColor: "#dee2e6",
@@ -285,7 +293,7 @@ export default function Billing() {
           <h6>Named Session 1: $</h6>
           <h6>Named Session 2: $</h6>
         </Container>
-      </TableContainer>
+      </TableContainer> */}
     </>
   );
 }
