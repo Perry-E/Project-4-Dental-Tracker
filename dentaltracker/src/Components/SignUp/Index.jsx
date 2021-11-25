@@ -53,7 +53,7 @@ export default function SignUp() {
   // }
 
   return (
-    <div className="w-100" style={{ maxWidth: "400px", marginTop: "-400px" }}>
+    <div className="w-100" style={{ maxWidth: "400px", marginTop: "-200px" }}>
       <Card>
         <Card.Body>
           {/* center text, margin bottom */}
