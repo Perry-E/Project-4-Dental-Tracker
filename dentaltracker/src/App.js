@@ -16,7 +16,7 @@ import { Navigate } from "react-router";
 import ForgotPassword from "./Components/ForgotPassword/Index";
 
 function App() {
-    function PrivateRoute({ children }) {
+  function PrivateRoute({ children }) {
     const currentUser = useAuth();
     return currentUser !== null ? children : <Navigate to="/login" />;
   }

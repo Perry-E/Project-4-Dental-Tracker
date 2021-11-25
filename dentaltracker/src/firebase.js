@@ -57,4 +57,3 @@ export function logout() {
 export function resetPassword(email) {
   return sendPasswordResetEmail(auth, email);
 }
-
