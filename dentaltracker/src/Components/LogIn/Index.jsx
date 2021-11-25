@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login, useAuth } from "../../firebase";
 
 export default function LogIn() {
@@ -12,46 +12,58 @@ export default function LogIn() {
 
   const currentUser = useAuth();
   console.log("LOGIN 1 CURRENT USER", currentUser);
+
+  let navigate = useNavigate();
+
   async function handleLogin() {
     setLoading(true);
     try {
       await login(emailRef.current.value, passwordRef.current.value);
       console.log("CURRENT USER LOGIN", currentUser?.email);
+      navigate("/dashboard")
     } catch {
-      alert("Error!");
+      setError("Failed To Log In, Try Again!");
     }
     setLoading(false);
   }
 
   return (
-    <div className="w-100" style={{ maxWidth: "400px" }}>
+    <div className="w-100" style={{ maxWidth: "400px", marginTop: "-400px", }} >
       <Card>
         <Card.Body>
           {/* center text, margin bottom */}
           <h2 className="text-center mb-4">Log In</h2>
-          <div>Currently logged in as: {currentUser?.email}</div>
+          {/* <div>Currently logged in as: {currentUser?.email}</div> */}
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form>
             <Form.Group id="email">
-              <Form.Label>Email</Form.Label>
+              <Form.Label>Email:</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
             <Form.Group id="password">
-              <Form.Label>Password</Form.Label>
+              <Form.Label>Password:</Form.Label>
               <Form.Control type="password" ref={passwordRef} required />
             </Form.Group>
-            <Link to="/dashboard">
+            {/* <Link to="/dashboard"> */}
               <Button
                 disabled={loading || currentUser}
                 onClick={handleLogin}
                 className="w-100 mt-4"
                 type="submit"
+                style={{
+                  backgroundColor: "#06d6a0",
+                  color: "#495057",
+                  border: "none",
+                }}
               >
                 Log In
               </Button>
-            </Link>
+            {/* </Link> */}
           </Form>
+          <div className="w-100 text-center mt-2">
+            <Link to="/forgot-password">Forgot Password?</Link>
+          </div>
         </Card.Body>
       </Card>
       <div className="w-100 text-center mt-2">
