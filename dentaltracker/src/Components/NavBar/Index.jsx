@@ -76,7 +76,7 @@ export default function ButtonAppBar() {
                 href="/login"
                 style={{ textDecoration: "none", color: "white" }}
               >
-                <Button color="inherit">Login</Button>
+                <Button color="inherit">Log in</Button>
               </a>
               <a
                 href="/signup"
@@ -87,7 +87,9 @@ export default function ButtonAppBar() {
             </>
           ) : (
             <>
-            <h6 className="mx-2">Welcome {currentUser && currentUser.email}</h6>
+              <h6 className="mx-2">
+                Welcome {currentUser && currentUser.email}
+              </h6>
               <a
                 href="/login"
                 style={{ textDecoration: "none", color: "white" }}
@@ -97,7 +99,11 @@ export default function ButtonAppBar() {
                   onClick={handleLogout}
                   type="submit"
                   color="inherit"
-                  style={{ backgroundColor: "#06d6a0", color: "#495057", border: "none" }}
+                  style={{
+                    backgroundColor: "#06d6a0",
+                    color: "#495057",
+                    border: "none",
+                  }}
                 >
                   Log Out
                 </Button>
