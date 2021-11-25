@@ -1,12 +1,10 @@
-import { setDoc, collection, doc, updateDoc } from "@firebase/firestore";
+import { doc, updateDoc } from "@firebase/firestore";
 import React, { useState } from "react";
 import { Modal, Button, Form, Card } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { db } from "../../firebase";
 import { useAuth } from "../../firebase";
 
 export default function UpdateModal(props) {
-  console.log("UPDATE PROPS", props);
   const currentUser = useAuth();
 
   const [location, setLocation] = useState("");
@@ -31,28 +29,6 @@ export default function UpdateModal(props) {
     window.location.reload(false);
   };
 
-  //! Create new location
-  //   async function handleUpdate(e) {
-  //     e?.preventDefault();
-  //     const locationRef = collection(db, "users", props.currentUser?.uid, "location");
-  //     await setDoc(
-  //       locationRef,
-  //       {
-  //         locationName: location,
-  //         sessionName: sessionName,
-  //         start: start,
-  //         end: end,
-  //         // commission: commission,
-  //       },
-  //       { merge: true }
-  //     );
-  //     // setLocation("");
-  //     // setSessionName("");
-  //     // setStart("");
-  //     // setEnd("");
-  //     // setCommission("");
-  //   }
-
   return (
     <Modal
       {...props}
@@ -73,7 +49,6 @@ export default function UpdateModal(props) {
                 <Form.Label>Name of Location:</Form.Label>
                 <Form.Control
                   type="location"
-                  //   ref={props.locationRef}
                   required
                   defaultValue={props?.selected?.locationName}
                   onChange={(e) => setLocation(e?.target?.value)}
@@ -83,7 +58,6 @@ export default function UpdateModal(props) {
                 <Form.Label>Session Name:</Form.Label>
                 <Form.Control
                   type="sessionName"
-                  //   ref={props.sessionNameRef}
                   required
                   onChange={(e) => setSessionName(e?.target?.value)}
                   defaultValue={props?.selected?.sessionName}
@@ -93,14 +67,12 @@ export default function UpdateModal(props) {
                 <Form.Label>Start Time:</Form.Label>
                 <Form.Control
                   type="time"
-                  //   ref={props.startRef}
                   required
                   onChange={(e) => setStart(e?.target?.value)}
                 />
                 <Form.Label>End Time:</Form.Label>
                 <Form.Control
                   type="time"
-                  //   ref={props.endRef}
                   required
                   onChange={(e) => setEnd(e?.target?.value)}
                 />
@@ -114,9 +86,8 @@ export default function UpdateModal(props) {
           {" "}
           Close
         </Button>
-        {/* <Link to="/location"> */}
+
         <Button
-          //   onClick={props.onHide}
           onClick={() => {
             handleUpdate();
           }}
@@ -128,13 +99,6 @@ export default function UpdateModal(props) {
         >
           Save Changes
         </Button>
-        {/* </Link> */}
-        {/* <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button> */}
       </Modal.Footer>
     </Modal>
   );
