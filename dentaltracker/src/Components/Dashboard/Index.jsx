@@ -204,7 +204,7 @@ export default function Dashboard() {
   console.log("TOTAL PROCEDURES", totalProcedures);
 
   return (
-    <div style={{marginTop:"-300px"}}>
+    <div style={{ marginTop: "-200px" }}>
       <h4 className="text-center mb-4">Treatment/Procedure</h4>
       {/* <TableContainer>
         <Button
@@ -352,9 +352,11 @@ export default function Dashboard() {
         toggleOAndM={toggleOAndM}
         toggleOcclusal={toggleOcclusal}
       />
-      <div style={{
-              textAlign: "center"
-            }}>
+      <div
+        style={{
+          textAlign: "center",
+        }}
+      >
         <Link to="summary" state={{ data: totalProcedures }}>
           {/* <Navigate to */}
           <Button
