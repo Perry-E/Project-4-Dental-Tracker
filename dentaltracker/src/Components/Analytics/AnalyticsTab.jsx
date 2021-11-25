@@ -49,7 +49,7 @@ export default function BasicTabs() {
   };
 
   return (
-    <Box sx={{ width: "100%" }} style={{marginTop:"-200px"}}>
+    <Box sx={{ width: "100%" }} style={{ marginTop: "-100px" }}>
       <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
         <Tabs
           value={value}
@@ -64,9 +64,7 @@ export default function BasicTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div
-          className="chart-container my-5"
-        >
+        <div className="chart-container my-5">
           <BarChart />
         </div>
       </TabPanel>
