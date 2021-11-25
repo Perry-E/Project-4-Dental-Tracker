@@ -5,7 +5,7 @@
 For some context, the dental industry in Singapore is split into two divisions, public and private dentists. Private dentists face the problem of receiving little to no information from clinics, as clinics are not obligated to because procedures/treatments conducted by private dentists are commission based, and they are not tied to any specific clinic. 
 Hence this app aims to address the problem by creating a central location for private dentists to have a log of all their past procedures and see be able to see if there are any potential trends.
 
-* Users will have their own profiles where they can 
+## Users will have their own profiles where they can: 
 * Manage the respective locations they work at,
 * Log all their day to day procedures/treatments they conduct,
 * View their commissions/billings and filter them accordingly to their preference,
@@ -15,7 +15,8 @@ Hence this app aims to address the problem by creating a central location for pr
 https://www.figma.com/file/fJvkvPXkBJ7xkaVHYttYEY/Untitled?node-id=298%3A19047
 
 ## What value does your application provide to your audience?
-It's an avenue for users to track their workload accordingly, observe relevant trends in the procedures that they conoduct, so that they can properly plan for future procedures (i.e. busiest months, weeks, morning or afternoon sessions etc.) Information that otherwise would not be shared/tracked by clinics. So instead of users having to create their own spreadsheets etc, they can simply sign up for an account and let this application do the work for them.
+It's an avenue for users to track their workload accordingly, observe relevant trends in the procedures that they conoduct, so that they can properly plan for future procedures (i.e. busiest months, weeks, morning or afternoon sessions etc.) Information that otherwise would not be shared/tracked by clinics. 
+So instead of users having to create their own spreadsheets etc, they can simply sign up for an account and let this application do the work for them.
  
 ## What steps have we taken to entice users?
 Surveys and questionaires have been sent out to potential users, to try and include as many features as possible, that can potentially aid them in their daily lives. 
