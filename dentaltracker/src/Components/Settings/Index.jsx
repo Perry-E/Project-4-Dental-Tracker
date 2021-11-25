@@ -1,11 +1,8 @@
 import { useRef, useState } from "react";
 import { Card, Form, Button, Alert } from "react-bootstrap";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useAuth } from "../../firebase";
-import { getAuth, updateEmail, updatePassword } from "firebase/auth";
-
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../firebase";
+import { updateEmail, updatePassword } from "firebase/auth";
 
 export default function Settings() {
   const emailRef = useRef();
@@ -19,28 +16,11 @@ export default function Settings() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const auth = getAuth();
   const currentUser = useAuth();
   console.log("CURRENTUSER", currentUser);
-  let navigate = useNavigate();
-
-  //   updateEmail(auth.currentUser, email).then(() => {
-  //     setMessage("Email Successfully Updated")
-  //   }).catch((error) => {
-  //     setError("Failed to update Email");
-  //     console.log(error)
-  //   });
-
-  // updatePassword(auth.currentUser, password).then(() => {
-  //   setMessage("Password Successfully Updated")
-  // }).catch((error) => {
-  //   setError("Failed to update Password");
-  //     console.log(error)
-  // });
 
   function handleUpdate(e) {
     e.preventDefault();
-    // if (passwordRef.current.value !== passwordConfirmRef.current.value)
     if (password !== confirmPassword) {
       return setError("Passwords do not match");
     }
@@ -63,41 +43,15 @@ export default function Settings() {
         })
         .catch((error) => {
           setError("Failed to update Password");
-          // setError(error);
         });
     }
-    // window.location.reload(false);
-    // const promises = [];
-    // setLoading(true);
-    // setError("");
-    // if (email !== currentUser.email) {
-    //   promises.push(updateEmail(email));
-    // }
-    // if (passwordRef.current.value) {
-    //   promises.push(updatePassword(password));
-    // }
-    // Promise.all(promises)
-    //   .then(() => {
-    //     navigate("/dashboard");
-    //   })
-    //   .catch(() => {
-    //     setError("Failed to update account");
-    //   })
-    //   .finally(() => {
-    //     setLoading(false);
-    //   });
   }
-
-  console.log("PASSWORD", password);
-  console.log("CONFIRM PASSWORD", confirmPassword);
 
   return (
     <div className="w-100" style={{ maxWidth: "400px", marginTop: "-250px" }}>
       <Card>
         <Card.Body>
-          {/* center text, margin bottom */}
           <h2 className="text-center mb-4">Update Profile</h2>
-          {/* <div>Currently logged in as: {currentUser?.email}</div> */}
           {error && <Alert variant="danger">{error}</Alert>}
           {message && <Alert variant="success">{message}</Alert>}
 
@@ -130,13 +84,9 @@ export default function Settings() {
                 placeholder="Leave blank to keep the same"
               />
             </Form.Group>
-            {/* <Link to="/location"> */}
             <Button
               disabled={loading}
-              onClick={
-                handleUpdate
-                // handleNew();
-              }
+              onClick={handleUpdate}
               className="w-100 mt-4"
               type="submit"
               style={{
@@ -147,7 +97,6 @@ export default function Settings() {
             >
               Update
             </Button>
-            {/* </Link> */}
           </Form>
         </Card.Body>
       </Card>
