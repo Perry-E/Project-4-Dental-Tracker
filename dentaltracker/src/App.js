@@ -11,7 +11,16 @@ import Billing from "./Components/Billing/Index";
 import Analytics from "./Components/Analytics/Index";
 import Settings from "./Components/Settings/Index";
 
+import { useAuth } from "./firebase";
+import { Navigate } from "react-router";
+import ForgotPassword from "./Components/ForgotPassword/Index";
+
 function App() {
+    function PrivateRoute({ children }) {
+    const currentUser = useAuth();
+    return currentUser !== null ? children : <Navigate to="/login" />;
+  }
+
   return (
     <div className="App">
       <ButtonAppBar />
@@ -27,17 +36,67 @@ function App() {
 
             <Route path="/logout" element={<LogOut />} />
 
-            <Route path="/location" element={<Location />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
 
-            <Route path="/billing" element={<Billing />} />
+            <Route
+              path="/location"
+              element={
+                <PrivateRoute>
+                  {" "}
+                  <Location />{" "}
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/analytics" element={<Analytics />} />
+            <Route
+              path="/billing"
+              element={
+                <PrivateRoute>
+                  {" "}
+                  <Billing />{" "}
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/settings" element={<Settings />} />
+            <Route
+              path="/analytics"
+              element={
+                <PrivateRoute>
+                  {" "}
+                  <Analytics />{" "}
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/dashboard" element={<Dashboard />} />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  {" "}
+                  <Settings />{" "}
+                </PrivateRoute>
+              }
+            />
 
-            <Route path="/dashboard/summary" element={<Summary />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  {" "}
+                  <Dashboard />{" "}
+                </PrivateRoute>
+              }
+            />
+
+            <Route
+              path="/dashboard/summary"
+              element={
+                <PrivateRoute>
+                  {" "}
+                  <Summary />{" "}
+                </PrivateRoute>
+              }
+            />
           </Routes>
         </BrowserRouter>
       </Container>
