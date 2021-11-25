@@ -20,8 +20,6 @@ ChartJS.register(
 );
 
 export default function BarChart(props) {
-  console.log("PROPS", props);
-
   const options = {
     responsive: true,
     plugins: {
@@ -76,11 +74,6 @@ export default function BarChart(props) {
         ],
         borderWidth: 1,
       },
-      //   {
-      //     label: 'Dataset 2',
-      //     data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      //     backgroundColor: 'rgba(53, 162, 235, 0.5)',
-      //   },
     ],
   };
 
@@ -93,5 +86,3 @@ export default function BarChart(props) {
     </div>
   );
 }
-
-//!AM PM Difference??

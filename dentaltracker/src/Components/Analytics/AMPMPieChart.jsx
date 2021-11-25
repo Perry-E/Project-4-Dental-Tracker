@@ -5,7 +5,6 @@ import { Pie } from "react-chartjs-2";
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 export default function AMPMPieChart({ filteredAM, filteredPM }) {
-  console.log("PIECHART PROPS", { filteredAM, filteredPM });
   const data = {
     labels: ["AM Sessions", "PM Sessions"],
     datasets: [

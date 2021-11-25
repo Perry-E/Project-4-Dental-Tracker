@@ -13,41 +13,31 @@ export default function ProceduresPieChart({ procedures }) {
       item["Cons & Tx Planning Model"]["Cons & Tx Planning Model"].length > 0
     );
   });
-  // console.log("CONSTX", consTx)
   numConsTx = consTx.length;
-  // console.log("NUMCONSTX", numConsTx)
 
   let numOrtho = 0;
   const ortho = procedures.filter((item) => {
     return item["Orthodontics Model"]["Orthodontics Model"].length > 0;
   });
-  // console.log("ortho", ortho)
   numOrtho = ortho.length;
-  // console.log("NUMortho", numOrtho)
 
   let numPeriod = 0;
   const period = procedures.filter((item) => {
     return item["Periodontal Therapy"]["Periodontal Therapy"].length > 0;
   });
-  // console.log("period", period)
   numPeriod = period.length;
-  // console.log("NUMperiod", numPeriod)
 
   let numOandM = 0;
   const oAndM = procedures.filter((item) => {
     return item["O&M Surgery"]["O&M Surgery"].length > 0;
   });
-  // console.log("oAndM", oAndM)
   numOandM = oAndM.length;
-  // console.log("NUMOANDM", numOandM)
 
   let numOcclusal = 0;
   const occlusal = procedures.filter((item) => {
     return item["Occlusal Therapy"]["Occlusal Therapy"].length > 0;
   });
-  // console.log("occlusal", occlusal)
   numOcclusal = occlusal.length;
-  // console.log("NUMocclusal", numOcclusal)
 
   const data = {
     labels: [
@@ -64,7 +54,6 @@ export default function ProceduresPieChart({ procedures }) {
         backgroundColor: [
           "rgba(255, 99, 132, 0.2)",
           "rgba(54, 162, 235, 0.2)",
-          // 'rgba(255, 206, 86, 0.2)',
           "rgba(75, 192, 192, 0.2)",
           "rgba(153, 102, 255, 0.2)",
           "rgba(255, 159, 64, 0.2)",
@@ -72,7 +61,6 @@ export default function ProceduresPieChart({ procedures }) {
         borderColor: [
           "rgba(255, 99, 132, 1)",
           "rgba(54, 162, 235, 1)",
-          // 'rgba(255, 206, 86, 1)',
           "rgba(75, 192, 192, 1)",
           "rgba(153, 102, 255, 1)",
           "rgba(255, 159, 64, 1)",

@@ -6,7 +6,6 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import BarChart from "./BarChart";
 import { LineChart } from "./LineChart";
-import PieChart from "./ProceduresPieChart";
 import AMPMPieChart from "./AMPMPieChart";
 import ProceduresPieChart from "./ProceduresPieChart";
 
@@ -45,7 +44,6 @@ function a11yProps(index) {
 
 export default function BasicTabs({ data }) {
   const [value, setValue] = React.useState(0);
-  console.log("BASIC TAB PROPS", data);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -54,22 +52,18 @@ export default function BasicTabs({ data }) {
   const mappedDate = data.map((item) => {
     return item.Date;
   });
-  console.log("MAPPED DATES", mappedDate);
 
   const mappedTime = data.map((item) => {
     return item.Time;
   });
-  console.log("MAPPED TIME", mappedTime);
 
   const filteredAM = data.filter((time) => {
     return time.Time < "12";
   });
-  console.log("FILTERED TIME", filteredAM);
 
   const filteredPM = data.filter((time) => {
     return time.Time > "12";
   });
-  console.log("FILTERED TIME", filteredPM);
 
   return (
     <Box sx={{ width: "100%" }} style={{ marginTop: "-100px" }}>
