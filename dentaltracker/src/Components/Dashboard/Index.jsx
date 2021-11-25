@@ -3,7 +3,6 @@ import { collection, query, onSnapshot } from "firebase/firestore";
 import { db, useAuth } from "../../firebase";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import { TableContainer } from "@mui/material";
 import DashboardTab from "./DashboardTab";
 
 export default function Dashboard() {
@@ -11,7 +10,6 @@ export default function Dashboard() {
   const [totalCompleted, setTotalCompleted] = useState([]);
 
   const currentUser = useAuth();
-  // console.log("CurrentUser", currentUser?.uid);
   useEffect(() => {
     const userQuery = query(collection(db, "users"));
     const userUnsub = onSnapshot(userQuery, (querySnapshot) => {
@@ -23,56 +21,8 @@ export default function Dashboard() {
     });
     return () => {
       userUnsub();
-      // totalUnsub();
     };
   }, []);
-  // console.log("USERS", users);
-  // console.log("TOTAL", totalCompleted);
-
-  //! //////////////////////////////////////////////////////////////////
-  const [show, setShow] = useState(false);
-  const [filterName, setFilterName] = useState();
-
-  const filteredValues = Object.keys(totalCompleted).filter((key) => {
-    return key === filterName;
-  });
-
-  // console.log("FILTERNAME", filterName);
-  //! //////////////////////////////////////////////////////////////////
-
-  // const [userLocations, setUserLocations] = useState([]);
-  // const [userProcedures, setUserProcedures] = useState([]);
-
-  // useEffect(() => {
-  //   //! Shows User specific locations
-
-  //   async function allLocations() {
-  //     // console.log("GETDOCS", getDocs)
-  //     const locationsSubcollection = await getDocs(
-  //       collection(db, "users", `${currentUser?.uid}`, "location")
-  //     );
-  //     let locationArray = [];
-  //     locationsSubcollection?.forEach((doc) => {
-  //       locationArray.push(doc.data());
-  //       setUserLocations(locationArray);
-  //     });
-  //   }
-  //   allLocations();
-
-  //   //! Shows User specific procedures
-  //   async function allProcedures() {
-  //     const proceduresSubcollection = await getDocs(
-  //       collection(db, "users", `${currentUser?.uid}`, "procedures")
-  //     );
-  //     let proceduresArray = [];
-  //     proceduresSubcollection?.forEach((doc) => {
-  //       proceduresArray.push(doc.data());
-  //       // console.log("PROCEDURES ARRAY", proceduresArray);
-  //       setUserProcedures(proceduresArray[0]);
-  //     });
-  //   }
-  //   allProcedures();
-  // }, [currentUser?.uid]);
 
   const [consTx, setConsTx] = useState({
     "Cons & Tx Planning Model": [
@@ -85,13 +35,10 @@ export default function Dashboard() {
       { id: 7, name: "Special Material & Consumables", checked: false },
     ],
   });
-  // console.log("CONSTX", consTx);
 
   const toggleConsTx = (id) => {
-    // console.log("IDIDID", id);
     // loop over the consTx list and find the provided id.
     let updatedList = consTx["Cons & Tx Planning Model"].map((item) => {
-      // console.log("ITEMITEM", item);
       if (item.id === id) {
         return { ...item, checked: !item.checked }; //gets everything that was already in item, and updates "done"
       }
@@ -110,12 +57,9 @@ export default function Dashboard() {
       { id: 5, name: "Band Placement", checked: false },
     ],
   });
-  // console.log("ORTHODONTICS", orthodontics["Orthodontics Model"]);
   const toggleOrtho = (id) => {
-    // console.log("IDIDID", id);
     // loop over the consTx list and find the provided id.
     let updatedList = orthodontics["Orthodontics Model"].map((item) => {
-      // console.log("ITEMITEM", item);
       if (item.id === id) {
         return { ...item, checked: !item.checked }; //gets everything that was already in item, and updates "done"
       }
@@ -136,13 +80,10 @@ export default function Dashboard() {
       { id: 7, name: "Desensitisation -2", checked: false },
     ],
   });
-  // console.log("Periodontal", periodontal["Periodontal Therapy"]);
 
   const togglePeriod = (id) => {
-    // console.log("IDIDID", id);
     // loop over the consTx list and find the provided id.
     let updatedList = periodontal["Periodontal Therapy"].map((item) => {
-      // console.log("ITEMITEM", item);
       if (item.id === id) {
         return { ...item, checked: !item.checked }; //gets everything that was already in item, and updates "done"
       }
@@ -162,12 +103,10 @@ export default function Dashboard() {
       { id: 7, name: "Wiring -2", checked: false },
     ],
   });
-  // console.log("O&M SURGERY", oAndM["O&M Surgery"]);
+
   const toggleOAndM = (id) => {
-    // console.log("IDIDID", id);
     // loop over the consTx list and find the provided id.
     let updatedList = oAndM["O&M Surgery"].map((item) => {
-      // console.log("ITEMITEM", item);
       if (item.id === id) {
         return { ...item, checked: !item.checked }; //gets everything that was already in item, and updates "done"
       }
@@ -183,12 +122,9 @@ export default function Dashboard() {
       { id: 3, name: "Appliance Therapy - Per Visit", checked: false },
     ],
   });
-  // console.log("O&M SURGERY", occlusal["Occlusal Therapy"]);
   const toggleOcclusal = (id) => {
-    // console.log("IDIDID", id);
     // loop over the consTx list and find the provided id.
     let updatedList = occlusal["Occlusal Therapy"].map((item) => {
-      // console.log("ITEMITEM", item);
       if (item.id === id) {
         return { ...item, checked: !item.checked }; //gets everything that was already in item, and updates "done"
       }
@@ -201,145 +137,11 @@ export default function Dashboard() {
   useEffect(() => {
     setTotalProcedures([consTx, orthodontics, periodontal, oAndM, occlusal]);
   }, [consTx, orthodontics, periodontal, oAndM, occlusal]);
-  console.log("TOTAL PROCEDURES", totalProcedures);
 
   return (
     <div style={{ marginTop: "-200px" }}>
       <h4 className="text-center mb-4">Treatment/Procedure</h4>
-      {/* <TableContainer>
-        <Button
-          style={{
-            backgroundColor: "#dee2e6",
-            color: "#495057",
-            border: "none",
-          }}
-          className="w-100 mt-3 py-3 shadow-none"
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          Cons & Tx Planning Model
-        </Button>
-        {consTx["Cons & Tx Planning Model"]?.map((item, index) => {
-          // console.log("CONSTX", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => toggleConsTx(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
 
-        <Button
-          style={{
-            backgroundColor: "#dee2e6",
-            color: "#495057",
-            border: "none",
-          }}
-          className="w-100 mt-3 py-3 shadow-none"
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          Orthodontics Model
-        </Button>
-        {orthodontics["Orthodontics Model"]?.map((item, index) => {
-          // console.log("CONSTX", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => toggleOrtho(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
-
-        <Button
-          style={{
-            backgroundColor: "#dee2e6",
-            color: "#495057",
-            border: "none",
-          }}
-          className="w-100 mt-3 py-3 shadow-none"
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          Periodontal Therapy
-        </Button>
-        {periodontal["Periodontal Therapy"]?.map((item, index) => {
-          // console.log("CONSTX", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => togglePeriod(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
-
-        <Button
-          style={{
-            backgroundColor: "#dee2e6",
-            color: "#495057",
-            border: "none",
-          }}
-          className="w-100 mt-3 py-3 shadow-none"
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          O&M Surgery
-        </Button>
-        {oAndM["O&M Surgery"]?.map((item, index) => {
-          // console.log("CONSTX", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => toggleOAndM(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
-
-        <Button
-          style={{
-            backgroundColor: "#dee2e6",
-            color: "#495057",
-            border: "none",
-          }}
-          className="w-100 mt-3 py-3 shadow-none"
-          onClick={() => {
-            setShow(!show);
-          }}
-        >
-          Occlusal Therapy
-        </Button>
-        {occlusal["Occlusal Therapy"]?.map((item, index) => {
-          // console.log("CONSTX", item);
-          return (
-            <div key={index}>
-              <label>
-                <input
-                  type="checkbox"
-                  onClick={() => toggleOcclusal(item.id)}
-                />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
-      </TableContainer>
-      <TableContainer
-        style={{ position: "relative", right: "-300px", top: "-250px" }}
-      >
-        {show && <div>{filteredValues}</div>}
-      </TableContainer> */}
       <DashboardTab
         consTx={consTx}
         orthodontics={orthodontics}
@@ -358,7 +160,6 @@ export default function Dashboard() {
         }}
       >
         <Link to="summary" state={{ data: totalProcedures }}>
-          {/* <Navigate to */}
           <Button
             style={{
               backgroundColor: "#06d6a0",
@@ -367,7 +168,6 @@ export default function Dashboard() {
               maxWidth: "200px",
             }}
             className="w-100 mt-5 py-3"
-            // onClick={()=>handleNew()}
           >
             Next
           </Button>

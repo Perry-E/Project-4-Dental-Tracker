@@ -39,7 +39,7 @@ function a11yProps(index) {
 }
 
 export default function DashboardTab(props) {
-    console.log("TABSTABS", props)
+  console.log("TABSTABS", props);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -64,83 +64,88 @@ export default function DashboardTab(props) {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        <div
-          className="chart-container my-5"
-        >
-            {props.consTx["Cons & Tx Planning Model"]?.map((item, index) => {
-        //   console.log("CONSTX", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => props.toggleConsTx(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
+        <div className="chart-container my-5">
+          {props.consTx["Cons & Tx Planning Model"]?.map((item, index) => {
+            return (
+              <div key={index}>
+                <label>
+                  <input
+                    type="checkbox"
+                    onClick={() => props.toggleConsTx(item.id)}
+                  />{" "}
+                  {item.name}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div className="chart-container my-5">
-        {props.orthodontics["Orthodontics Model"]?.map((item, index) => {
-        //   console.log("ORTHO", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => props.toggleOrtho(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
+          {props.orthodontics["Orthodontics Model"]?.map((item, index) => {
+            return (
+              <div key={index}>
+                <label>
+                  <input
+                    type="checkbox"
+                    onClick={() => props.toggleOrtho(item.id)}
+                  />{" "}
+                  {item.name}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div className="chart-container my-5">
-        {props.periodontal["Periodontal Therapy"]?.map((item, index) => {
-        //   console.log("PERIODONTAL", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => props.togglePeriod(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
+          {props.periodontal["Periodontal Therapy"]?.map((item, index) => {
+            return (
+              <div key={index}>
+                <label>
+                  <input
+                    type="checkbox"
+                    onClick={() => props.togglePeriod(item.id)}
+                  />{" "}
+                  {item.name}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </TabPanel>
       <TabPanel value={value} index={3}>
         <div className="chart-container my-5">
-        {props.oAndM["O&M Surgery"]?.map((item, index) => {
-        //   console.log("O&M", item);
-          return (
-            <div key={index}>
-              <label>
-                <input type="checkbox" onClick={() => props.toggleOAndM(item.id)} />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
+          {props.oAndM["O&M Surgery"]?.map((item, index) => {
+            return (
+              <div key={index}>
+                <label>
+                  <input
+                    type="checkbox"
+                    onClick={() => props.toggleOAndM(item.id)}
+                  />{" "}
+                  {item.name}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </TabPanel>
       <TabPanel value={value} index={4}>
         <div className="chart-container my-5">
-        {props.occlusal["Occlusal Therapy"]?.map((item, index) => {
-          console.log("OCCULSAL", item);
-          return (
-            <div key={index}>
-              <label>
-                <input
-                  type="checkbox"
-                  onClick={() => props.toggleOcclusal(item.id)}
-                />{" "}
-                {item.name}
-              </label>
-            </div>
-          );
-        })}
+          {props.occlusal["Occlusal Therapy"]?.map((item, index) => {
+            return (
+              <div key={index}>
+                <label>
+                  <input
+                    type="checkbox"
+                    onClick={() => props.toggleOcclusal(item.id)}
+                  />{" "}
+                  {item.name}
+                </label>
+              </div>
+            );
+          })}
         </div>
       </TabPanel>
     </Box>

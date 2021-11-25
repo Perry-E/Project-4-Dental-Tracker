@@ -136,12 +136,12 @@ export default function Summary() {
   }
 
   const sessionsMap = userLocations.map((item) => {
-    return item.sessionName.toLowerCase();
+    return item?.sessionName;
   });
   console.log("SESSSIONSMAP", sessionsMap);
 
   const withoutDupesSession = [...new Set(sessionsMap)];
-  // console.log("WITHOUT DUPES", withoutDupesSession)
+  console.log("WITHOUT DUPES", withoutDupesSession)
 
   return (
     <div>
@@ -239,8 +239,8 @@ export default function Summary() {
             onChange={(e) => setSessionName(e.target.value)}
           >
             <option>Select Session</option>
-            {withoutDupesSession.map((item) => {
-              return <option>{item.sessionName}</option>;
+            {withoutDupesSession?.map((item) => {
+              return <option>{item}</option>;
             })}
           </Form.Select>
         </div>
