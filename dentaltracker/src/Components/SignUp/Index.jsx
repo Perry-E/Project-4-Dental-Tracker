@@ -3,9 +3,6 @@ import { Card, Form, Button, Alert } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { signup, useAuth } from "../../firebase";
 
-import { addDoc, collection } from "firebase/firestore";
-import { db } from "../../firebase";
-
 export default function SignUp() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -23,7 +20,6 @@ export default function SignUp() {
   async function handleSignup(e) {
     e?.preventDefault();
 
-    // setLoading(true);
     if (passwordRef.current.value !== passwordConfirmRef.current.value) {
       return setError("Passwords Do Not Match");
     }
@@ -33,32 +29,17 @@ export default function SignUp() {
       setLoading(true);
       await signup(emailRef.current.value, passwordRef.current.value);
       navigate("/location");
-      console.log("REFS", email, password, confirmPassword);
-      console.log("CURRENT USER SIGN UP", currentUser?.email);
     } catch {
       setError("Failed To Create An Account");
     }
     setLoading(false);
   }
 
-  // async function handleNew(e) {
-  //   e?.preventDefault();
-  //     await addDoc(collection(db, "users"), {
-  //     "email": email,
-  //     "password": password,
-  //   });
-  //   setEmail("")
-  //   setPassword("")
-  //   setConfirmPassword("")
-  // }
-
   return (
     <div className="w-100" style={{ maxWidth: "400px", marginTop: "-200px" }}>
       <Card>
         <Card.Body>
-          {/* center text, margin bottom */}
           <h2 className="text-center mb-4">Sign Up</h2>
-          {/* <div>Currently logged in as: {currentUser?.email}</div> */}
           {error && <Alert variant="danger">{error}</Alert>}
 
           <Form>
@@ -89,12 +70,10 @@ export default function SignUp() {
                 onChange={(e) => setConfirmPassword(e.target.value)}
               />
             </Form.Group>
-            {/* <Link to="/location"> */}
             <Button
               disabled={loading || currentUser}
               onClick={() => {
                 handleSignup();
-                // handleNew();
               }}
               className="w-100 mt-4"
               type="submit"
@@ -106,7 +85,6 @@ export default function SignUp() {
             >
               Sign Up
             </Button>
-            {/* </Link> */}
           </Form>
         </Card.Body>
       </Card>
