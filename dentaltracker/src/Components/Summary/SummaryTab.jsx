@@ -39,7 +39,6 @@ function a11yProps(index) {
 }
 
 export default function SummaryTab(props) {
-  console.log("TABSTABS", props);
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event, newValue) => {
@@ -63,8 +62,8 @@ export default function SummaryTab(props) {
           <Tab label="Occlusal Therapy" {...a11yProps(4)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0} style={{marginTop:"-50px"}}>
-        <div className="chart-container my-5" >
+      <TabPanel value={value} index={0} style={{ marginTop: "-50px" }}>
+        <div className="chart-container my-5">
           {props.consTxFiltered?.map((item) => {
             return (
               <ul>
@@ -74,7 +73,7 @@ export default function SummaryTab(props) {
           })}
         </div>
       </TabPanel>
-      <TabPanel value={value} index={1} style={{marginTop:"-50px"}}>
+      <TabPanel value={value} index={1} style={{ marginTop: "-50px" }}>
         <div className="chart-container my-5">
           {props.orthoFiltered?.map((item) => {
             return (
@@ -85,7 +84,7 @@ export default function SummaryTab(props) {
           })}
         </div>
       </TabPanel>
-      <TabPanel value={value} index={2} style={{marginTop:"-50px"}}>
+      <TabPanel value={value} index={2} style={{ marginTop: "-50px" }}>
         <div className="chart-container my-5">
           {props.periodFiltered?.map((item) => {
             return (
@@ -96,7 +95,7 @@ export default function SummaryTab(props) {
           })}
         </div>
       </TabPanel>
-      <TabPanel value={value} index={3} style={{marginTop:"-50px"}}>
+      <TabPanel value={value} index={3} style={{ marginTop: "-50px" }}>
         <div className="chart-container my-5">
           {props.oAndMFiltered?.map((item) => {
             return (
@@ -107,7 +106,7 @@ export default function SummaryTab(props) {
           })}
         </div>
       </TabPanel>
-      <TabPanel value={value} index={4} style={{marginTop:"-50px"}}>
+      <TabPanel value={value} index={4} style={{ marginTop: "-50px" }}>
         <div className="chart-container my-5">
           {props.occlusalFiltered?.map((item) => {
             return (

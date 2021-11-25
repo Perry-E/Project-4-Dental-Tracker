@@ -9,7 +9,6 @@ import SummaryTab from "./SummaryTab";
 export default function Summary() {
   const location = useLocation();
   const { data } = location?.state;
-  console.log("data", data);
 
   const [consTx, setConsTx] = useState();
   const [orthodontics, setOrthodontics] = useState();
@@ -23,11 +22,6 @@ export default function Summary() {
     setOAndM(data[3]["O&M Surgery"]);
     setOcclusal(data[4]["Occlusal Therapy"]);
   }, [data]);
-  //   console.log("CONSTX", consTx)
-  //   console.log("orthodontics", orthodontics)
-  //   console.log("periodontal", periodontal)
-  //   console.log("oAndM", oAndM)
-  //   console.log("occlusal", occlusal)
 
   const currentUser = useAuth();
 
@@ -46,58 +40,40 @@ export default function Summary() {
     }
     allLocations();
   }, [currentUser?.uid]);
-  console.log("USER LOCATIONS", userLocations);
 
   //! filtered consTx
   const consTxFiltered = consTx?.filter((item) => {
     return item.checked === true;
   });
-  console.log("consTxFiltered", consTxFiltered);
   const consTxData = { "Cons & Tx Planning Model": consTxFiltered };
-  console.log("constxdata", consTxData);
 
   //! filtered orthodontics
   const orthoFiltered = orthodontics?.filter((item) => {
     return item.checked === true;
   });
-  console.log("orthoFiltered", orthoFiltered);
   const orthoData = { "Orthodontics Model": orthoFiltered };
-  console.log("orthoData", orthoData);
 
   //! filtered periodontal
   const periodFiltered = periodontal?.filter((item) => {
     return item.checked === true;
   });
-  console.log("periodFiltered", periodFiltered);
   const periodData = { "Periodontal Therapy": periodFiltered };
-  console.log("periodData", periodData);
 
   //! filtered O&M Surgery
   const oAndMFiltered = oAndM?.filter((item) => {
     return item.checked === true;
   });
-  console.log("oAndMFiltered", oAndMFiltered);
   const oAndMData = { "O&M Surgery": oAndMFiltered };
-  console.log("oAndMData", oAndMData);
 
   //! filtered Occlusal Therapy
   const occlusalFiltered = occlusal?.filter((item) => {
     return item.checked === true;
   });
-  console.log("occlusalFiltered", occlusalFiltered);
   const occlusalData = { "Occlusal Therapy": occlusalFiltered };
-  console.log("occlusalData", occlusalData);
 
   //! All selected data
   let selectedData = [];
   selectedData.push(consTxData, orthoData, periodData, oAndMData, occlusalData);
-  console.log("selectedData", selectedData);
-
-  //   const [selectedData, setSelectedData] = useState([])
-  //   useEffect(()=>{
-  //       setSelectedData([consTxData, orthoData, periodData, oAndMData, occlusalData])
-  //   },[])
-  //   console.log("SELECTEDDATA", selectedData)
 
   const [charged, setCharged] = useState();
   const [commission, setCommission] = useState();
@@ -138,38 +114,12 @@ export default function Summary() {
   const sessionsMap = userLocations.map((item) => {
     return item?.sessionName;
   });
-  console.log("SESSSIONSMAP", sessionsMap);
 
   const withoutDupesSession = [...new Set(sessionsMap)];
-  console.log("WITHOUT DUPES", withoutDupesSession)
 
   return (
     <div>
       <h5 style={{ textAlign: "center", marginTop: "-30px" }}>SUMMARY</h5>
-      {/* <h4>Cons & Tx Planning Model</h4>
-      {consTxFiltered?.map((item) => {
-        return <div>{item.name}</div>;
-      })}
-
-      <h4>Orthodontics Model</h4>
-      {orthoFiltered?.map((item) => {
-        return <div>{item.name}</div>;
-      })}
-
-      <h4>Periodontal Therapy</h4>
-      {periodFiltered?.map((item) => {
-        return <div>{item.name}</div>;
-      })}
-
-      <h4>O&M Surgery</h4>
-      {oAndMFiltered?.map((item) => {
-        return <div>{item.name}</div>;
-      })}
-
-      <h4>Occlusal Therapy</h4>
-      {occlusalFiltered?.map((item) => {
-        return <div>{item.name}</div>;
-      })} */}
 
       <SummaryTab
         consTxFiltered={consTxFiltered}
