@@ -14,7 +14,6 @@ import { logout, useAuth } from "../../firebase";
 
 export default function ButtonAppBar() {
   const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState("");
 
   const currentUser = useAuth();
 
