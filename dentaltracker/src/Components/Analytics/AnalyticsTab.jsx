@@ -6,7 +6,9 @@ import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import BarChart from "./BarChart";
 import { LineChart } from "./LineChart";
-import PieChart from "./PieChart";
+import PieChart from "./ProceduresPieChart";
+import AMPMPieChart from "./AMPMPieChart";
+import ProceduresPieChart from "./ProceduresPieChart";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -41,12 +43,33 @@ function a11yProps(index) {
   };
 }
 
-export default function BasicTabs() {
+export default function BasicTabs({ data }) {
   const [value, setValue] = React.useState(0);
+  console.log("BASIC TAB PROPS", data);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  const mappedDate = data.map((item) => {
+    return item.Date;
+  });
+  console.log("MAPPED DATES", mappedDate);
+
+  const mappedTime = data.map((item) => {
+    return item.Time;
+  });
+  console.log("MAPPED TIME", mappedTime);
+
+  const filteredAM = data.filter((time) => {
+    return time.Time < "12";
+  });
+  console.log("FILTERED TIME", filteredAM);
+
+  const filteredPM = data.filter((time) => {
+    return time.Time > "12";
+  });
+  console.log("FILTERED TIME", filteredPM);
 
   return (
     <Box sx={{ width: "100%" }} style={{ marginTop: "-100px" }}>
@@ -58,24 +81,30 @@ export default function BasicTabs() {
           variant="scrollable"
           scrollButtons="auto"
         >
-          <Tab label="Commission (Bar Chart)" {...a11yProps(0)} />
-          <Tab label="Commission (Line Chart)" {...a11yProps(1)} />
-          <Tab label="Procedures Per Category" {...a11yProps(2)} />
+          <Tab label="Procedures Per Category" {...a11yProps(0)} />
+          <Tab label="AM/PM Sessions" {...a11yProps(1)} />
+          <Tab label="Commission (Bar Chart)" {...a11yProps(2)} />
+          <Tab label="Commission (Line Chart)" {...a11yProps(3)} />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
         <div className="chart-container my-5">
-          <BarChart />
+          <ProceduresPieChart procedures={data} />
         </div>
       </TabPanel>
       <TabPanel value={value} index={1}>
         <div className="chart-container my-5">
-          <LineChart />
+          <AMPMPieChart filteredAM={filteredAM} filteredPM={filteredPM} />
         </div>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <div className="chart-container my-5">
-          <PieChart />
+          <BarChart />
+        </div>
+      </TabPanel>
+      <TabPanel value={value} index={3}>
+        <div className="chart-container my-5">
+          <LineChart />
         </div>
       </TabPanel>
     </Box>
