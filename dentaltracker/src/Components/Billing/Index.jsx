@@ -22,9 +22,6 @@ export default function Billing() {
   const [month, setMonth] = useState("");
   const [year, setYear] = useState("");
 
-  console.log("YEAR", year);
-  console.log("MONTH", month);
-
   useEffect(() => {
     let procedureArray = [];
     async function allProcedures() {
@@ -38,7 +35,6 @@ export default function Billing() {
     }
     allProcedures();
   }, [currentUser?.uid]);
-  console.log("PROCEDUREDATA", procedureData);
 
   const columns = [
     { id: "clinicSession", label: "Clinic/Session", minWidth: 200 },
@@ -85,51 +81,13 @@ export default function Billing() {
     return null;
   });
 
-  console.log("FILTERED DATA", filteredData);
-
-  // useEffect(() => {
-  //   setProcedureData(filteredData);
-  // const filterByYear = procedureData.filter((item) => {
-  //   // console.log("YEAR FILTER", format(new Date(item.Date), "yyyy"))
-  //   return format(new Date(item.Date), "yyyy") === year;
-  // });
-  // setProcedureData(filterByYear);
-
-  // const filterByMonth = procedureData.filter((item) => {
-  //   // console.log("MONTH FILTER", format(new Date(item.Date), "MMM"))
-  //   return format(new Date(item.Date), "MMM") === month;
-  // });
-  // setProcedureData(filterByMonth);
-  // }, []);
-  // console.log("NEW PEOCEDURE DATA", procedureData);
-
   let rows = filteredData.map((item) => {
     return createData(
       item?.Location + " / " + item?.Session,
       format(new Date(item?.Date), "dd/MM/yyyy"),
       item?.Charged * (item?.Commission / 100)
     );
-
-    // const charged = item.Charged
-    // console.log("charged", charged);
-
-    // const commission = item.Commission
-    // console.log("commission", commission);
-
-    // const takeBack = item.Charged * (item.Commission / 100);
-    // console.log("TAKEBACK", takeBack)
-
-    // const date = item.Date
-    // console.log("Date", date)
-
-    // const location = item.Location
-    // console.log("Location", location)
-
-    // const session = item.Session
-    // console.log("Session", session)
   });
-
-  console.log("ROWS", rows);
 
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
@@ -148,10 +106,6 @@ export default function Billing() {
       <Container
         style={{
           marginTop: "-100px",
-          // height: "10em",
-          // display: "flex",
-          // alignItems: "center",
-          // justifyContent: "center",
         }}
       >
         <div style={{ display: "flex" }} className="pt-4">
@@ -165,11 +119,6 @@ export default function Billing() {
             <option>Year</option>
             <option>2021</option>
             <option>2020</option>
-            {/* <option >2019</option>
-            <option >2018</option>
-            <option >2017</option>
-            <option >2016</option>
-            <option >2015</option> */}
           </Form.Select>
           <Form.Select
             className="w-50"
@@ -250,50 +199,6 @@ export default function Billing() {
           />
         </Paper>
       </Container>
-      {/* <TableContainer className="pt-4" style={{marginTop:"-300px"}}>
-        <Container
-          style={{
-            backgroundColor: "#dee2e6",
-            borderRadius: "10px",
-            color: "#495057",
-            maxWidth: "300px",
-          }}
-          className="w-100 py-3"
-        >
-          <h6>LOCATION</h6>
-          <h6>Total Billed Amount: $</h6>
-          <h6>Named Session 1: $</h6>
-          <h6>Named Session 2: $</h6>
-        </Container>
-        <Container
-          style={{
-            backgroundColor: "#dee2e6",
-            borderRadius: "10px",
-            color: "#495057",
-            maxWidth: "300px",
-          }}
-          className="w-100 mt-5 py-3"
-        >
-          <h6>LOCATION</h6>
-          <h6>Total Billed Amount: $</h6>
-          <h6>Named Session 1: $</h6>
-          <h6>Named Session 2: $</h6>
-        </Container>
-        <Container
-          style={{
-            backgroundColor: "#dee2e6",
-            borderRadius: "10px",
-            color: "#495057",
-            maxWidth: "300px",
-          }}
-          className="w-100 mt-5 py-3"
-        >
-          <h6>LOCATION</h6>
-          <h6>Total Billed Amount: $</h6>
-          <h6>Named Session 1: $</h6>
-          <h6>Named Session 2: $</h6>
-        </Container>
-      </TableContainer> */}
     </>
   );
 }
