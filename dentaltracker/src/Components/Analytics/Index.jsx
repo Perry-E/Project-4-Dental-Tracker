@@ -37,7 +37,7 @@ export default function Analytics() {
 
   return (
     <>
-      <BasicTabs />
+      <BasicTabs data={procedureData}/>
     </>
   );
 }
