@@ -113,7 +113,7 @@ export default function Summary() {
     const proceduresRef = collection(
       db,
       "users",
-      currentUser?.uid,
+      `${currentUser?.uid}`,
       "procedures"
     );
     await addDoc(
@@ -218,6 +218,7 @@ export default function Summary() {
             id="location"
             onChange={(e) => setLocationName(e.target.value)}
           >
+            <option>Select Location</option>
             {userLocations.map((item) => {
               return <option>{item.locationName}</option>;
             })}
@@ -229,6 +230,7 @@ export default function Summary() {
             id="session"
             onChange={(e) => setSessionName(e.target.value)}
           >
+            <option>Select Session</option>
             {userLocations.map((item) => {
               return <option>{item.sessionName}</option>;
             })}
