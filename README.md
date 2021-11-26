@@ -3,7 +3,7 @@
 ## What is your application? 
 
 The dental industry in Singapore is split into two divisions, public and private dentists. Private dentists face the problem of receiving little to no information from clinics, as clinics are not obligated to because procedures/treatments conducted by private dentists are commission based, and they are not tied to any specific clinic. 
-Hence this app aims to address the problem by creating a central location for private dentists to have a log of all their past procedures and see be able to see if there are any potential trends.
+Hence this app aims to address the problem by creating a central location for private dentists to have a log of all their past procedures and be able to see if there are any potential trends.
 
 ## Users will have their own profiles where they can: 
 * Manage the respective locations they work at,
