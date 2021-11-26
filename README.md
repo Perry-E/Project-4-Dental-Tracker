@@ -16,7 +16,8 @@ https://www.figma.com/file/fJvkvPXkBJ7xkaVHYttYEY/Untitled?node-id=298%3A19047
 
 ## What value does your application provide to your audience?
 It's an avenue for users to track their workload accordingly, observe relevant trends in the procedures that they conoduct, so that they can properly plan for future procedures (i.e. busiest months, weeks, morning or afternoon sessions etc.) Information that otherwise would not be shared/tracked by clinics. 
-So instead of users having to create their own spreadsheets etc, they can simply sign up for an account and let this application do the work for them.
+
+So the aim is to bridge the gap between clinics and private dentists, instead of users having to create their own spreadsheets etc, they can simply sign up for an account and let this application do the work for them.
  
 ## What steps have we taken to entice users?
 Surveys and questionaires have been sent out to potential users, to try and include as many features as possible, that can potentially aid them in their daily lives. 
