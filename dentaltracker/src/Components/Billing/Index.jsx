@@ -117,6 +117,7 @@ export default function Billing() {
             onChange={(e) => setYear(e?.target?.value)}
           >
             <option>Year</option>
+            <option>2022</option>
             <option>2021</option>
             <option>2020</option>
           </Form.Select>
