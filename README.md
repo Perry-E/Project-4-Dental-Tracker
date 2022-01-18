@@ -15,7 +15,7 @@ Hence this app aims to address the problem by creating a central location for pr
 https://www.figma.com/file/fJvkvPXkBJ7xkaVHYttYEY/Untitled?node-id=298%3A19047
 
 ## App deployed on vercel
-https://project-4-dental-tracker-709y239un-perry-e.vercel.app/login
+https://project-4-dental-tracker-5twkaxvt8-perry-e.vercel.app/login
 
 ## What value does your application provide to your audience?
 It's an avenue for users to track their workload accordingly, observe relevant trends in the procedures that they conoduct, so that they can properly plan for future procedures (i.e. busiest months, weeks, morning or afternoon sessions etc.) Information that otherwise would not be shared/tracked by clinics. 
